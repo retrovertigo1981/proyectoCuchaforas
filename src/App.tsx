@@ -5,7 +5,7 @@ function App() {
     <>
       <Header />
       <div className='min-h-screen'>
-        <h1 className="text-center text-5xl">Hola Mundo como estas</h1>
+        <h1 className="text-center text-5xl">Hola Mundo como estas eooeoeoeoeoe</h1>
       </div>
       <Footer />
     </>
