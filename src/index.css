@@ -2,6 +2,216 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Paleta oficial Cuchaforas - Base clara */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Primary - Rojo característico */
+    --primary: 5 78% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Púrpura suave */
+    --secondary: 241 30% 67%;
+    --secondary-foreground: 0 0% 10%;
+
+    /* Accent - Mostaza/Amarillo */
+    --accent: 46 99% 54%;
+    --accent-foreground: 0 0% 10%;
+
+    /* Muted - Púrpura claro */
+    --muted: 243 38% 79%;
+    --muted-foreground: 244 20% 48%;
+
+    /* Glow effects - Amarillo brillante */
+    --glow: 48 100% 60%;
+    --glow-soft: 46 94% 44%;
+
+    /* Brand colors adicionales */
+    --purple-dark: 244 20% 48%;
+    --purple-medium: 244 23% 58%;
+    --purple-light: 243 38% 79%;
+    --red-bright: 5 79% 54%;
+    --red-coral: 5 78% 61%;
+    --red-light: 6 79% 69%;
+    --mustard-dark: 44 83% 38%;
+    --mustard-light: 46 94% 44%;
+
+    /* Elementos de UI */
+    --destructive: 5 78% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 243 38% 79%;
+    --input: 243 38% 95%;
+    --ring: 5 78% 45%;
+
+    --radius: 0.75rem;
+
+    /* Animaciones y transiciones */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Paleta Cuchaforas - Modo oscuro */
+    --background: 244 20% 12%;
+    --foreground: 0 0% 98%;
+
+    --card: 244 20% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 244 20% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 5 78% 61%;
+    --primary-foreground: 0 0% 10%;
+
+    --secondary: 241 30% 67%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 244 20% 25%;
+    --muted-foreground: 243 38% 79%;
+
+    --accent: 48 100% 60%;
+    --accent-foreground: 0 0% 10%;
+
+    --glow: 48 100% 60%;
+    --glow-soft: 46 94% 44%;
+
+    --destructive: 5 78% 61%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 244 20% 25%;
+    --input: 244 20% 22%;
+    --ring: 5 78% 61%;
+
+    --sidebar-background: 25 30% 12%;
+    --sidebar-foreground: 40 25% 92%;
+    --sidebar-primary: 18 75% 55%;
+    --sidebar-primary-foreground: 25 30% 12%;
+    --sidebar-accent: 25 20% 20%;
+    --sidebar-accent-foreground: 40 25% 92%;
+    --sidebar-border: 25 20% 25%;
+    --sidebar-ring: 18 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings:
+      'kern' 1,
+      'liga' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  /* Efectos de brillo para constelación */
+  .glow-point {
+    box-shadow:
+      0 0 20px hsl(var(--glow) / 0.6),
+      0 0 40px hsl(var(--glow) / 0.3);
+  }
+
+  .glow-point-hover {
+    box-shadow:
+      0 0 30px hsl(var(--glow) / 0.8),
+      0 0 60px hsl(var(--glow) / 0.5),
+      0 0 90px hsl(var(--glow) / 0.3);
+  }
+
+  /* Animaciones personalizadas */
+  .animate-pulse-soft {
+    animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Grain texture overlay */
+  .texture-grain {
+    position: relative;
+  }
+
+  .texture-grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+}
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -56,4 +266,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} */

@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoCuchaforas from '@/assets/img/cuchaforas_logo_negro.svg';
 
-
-
 const navigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
@@ -20,7 +18,7 @@ export const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="sticky  top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border bg-[#9695c3] color-[#ffffff]" >
+    <header className="sticky  top-0 left-0 right-0 z-50 backdrop-blur-md border-border bg-[#9695c3] color-[#ffffff]">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 ">
           {/* Logo */}
@@ -28,7 +26,7 @@ export const Header = () => {
             <img
               src={logoCuchaforas}
               alt="Logo Cuchaforas"
-              className=" w-16 h-16 rounded-full"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full"
             />
           </Link>
 
@@ -40,16 +38,15 @@ export const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-colors relative ${isActive
-                    ? 'text-black'
-                    : 'text-white hover:text-black'
-                    }`}
+                  className={`px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-colors relative ${
+                    isActive ? 'text-black' : 'text-white hover:text-black'
+                  }`}
                 >
                   {item.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
                       transition={{
                         type: 'spring',
                         stiffness: 380,
@@ -96,10 +93,11 @@ export const Header = () => {
                     key={item.name}
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`block px-4 py-3 text-base font-medium rounded-md transition-colors ${isActive
-                      ? 'bg-white/10 text-black'
-                      : 'text-white hover:bg-white/10 hover:text-black'
-                      }`}
+                    className={`block px-4 py-3 text-base font-medium rounded-md transition-colors ${
+                      isActive
+                        ? 'bg-white/10 text-black'
+                        : 'text-black hover:bg-white/10 hover:text-black'
+                    }`}
                   >
                     {item.name}
                   </Link>
