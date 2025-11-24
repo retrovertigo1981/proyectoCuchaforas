@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoCuchaforas from '@/assets/img/cuchaforas_logo_negro.svg';
 
+
+
 const navigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
@@ -18,9 +20,9 @@ export const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="sticky  top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border">
+    <header className="sticky  top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border bg-[#9695c3] color-[#ffffff]" >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20 ">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
@@ -39,8 +41,8 @@ export const Header = () => {
                   key={item.name}
                   to={item.href}
                   className={`px-3 lg:px-4 py-2 text-sm font-medium rounded-md transition-colors relative ${isActive
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-black'
+                    : 'text-white hover:text-black'
                     }`}
                 >
                   {item.name}
@@ -63,7 +65,7 @@ export const Header = () => {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-md text-foreground hover:bg-muted transition-colors"
+            className="md:hidden p-2 rounded-md text-white hover:bg-white/10 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Abrir menú</span>
@@ -95,8 +97,8 @@ export const Header = () => {
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`block px-4 py-3 text-base font-medium rounded-md transition-colors ${isActive
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                      ? 'bg-white/10 text-black'
+                      : 'text-white hover:bg-white/10 hover:text-black'
                       }`}
                   >
                     {item.name}

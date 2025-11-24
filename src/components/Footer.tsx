@@ -14,7 +14,7 @@ const footerNavigation = [
 
 export const Footer = () => {
     return (
-        <footer className="bg-card border-t border-border texture-grain">
+        <footer className="bg-card border-t border-border texture-grain bg-[#9695c3]">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
                 {/* Grid principal: 3 columnas en desktop */}
                 <motion.div
@@ -31,13 +31,13 @@ export const Footer = () => {
                         viewport={{ once: true }}
                         className="md:text-left md:self-start"
                     >
-                        <h3 className="text-lg font-semibold text-foreground mb-4">Explora</h3>
+                        <h3 className="text-lg font-semibold text-white mb-4">Explora</h3>
                         <nav className="flex flex-col space-y-2">
                             {footerNavigation.map((item) => (
                                 <Link
                                     key={item.name}
                                     to={item.href}
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 inline-block w-fit"
+                                    className="text-sm text-white hover:text-black transition-colors duration-200 inline-block w-fit"
                                 >
                                     {item.name}
                                 </Link>
@@ -60,7 +60,7 @@ export const Footer = () => {
                                 className="h-40 w-auto rounded-full transition-transform duration-300 group-hover:scale-105 md:mx-auto"
                             />
                         </Link>
-                        <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                        <p className="text-sm text-white leading-relaxed max-w-xs mx-auto">
                             Preservando la artesanía chilena a través de la innovación, el diseño contemporáneo y la tradición ancestral.
                         </p>
                     </motion.div>
@@ -73,7 +73,7 @@ export const Footer = () => {
                         transition={{ delay: 0.2 }}
                         className="md:text-right md:self-start"
                     >
-                        <p className="text-sm text-muted-foreground mb-3 font-medium">
+                        <p className="text-sm text-white mb-3 font-medium">
                             Proyecto financiado por
                         </p>
                         <motion.div
@@ -88,13 +88,13 @@ export const Footer = () => {
                             />
                         </motion.div>
                         <div className="space-y-1">
-                            <p className="text-base font-semibold text-foreground">
+                            <p className="text-base font-semibold text-white">
                                 Fondart 2025, Línea Artesanía
                             </p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white">
                                 Ministerio de las Culturas, las Artes y el Patrimonio
                             </p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white">
                                 Gobierno de Chile
                             </p>
                         </div>
@@ -118,14 +118,14 @@ export const Footer = () => {
                     transition={{ duration: 0.6, delay: 0.4 }}
                     className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm"
                 >
-                    <p className="text-muted-foreground">
+                    <p className="text-white">
                         © {new Date().getFullYear()} Cuchaforas. Todos los derechos reservados.
                     </p>
                     <div className="flex items-center gap-6">
-                        <Link to="/privacidad" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                        <Link to="/privacidad" className="text-white hover:text-black transition-colors duration-200">
                             Privacidad
                         </Link>
-                        <Link to="/terminos" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                        <Link to="/terminos" className="text-white hover:text-black transition-colors duration-200">
                             Términos
                         </Link>
                     </div>
