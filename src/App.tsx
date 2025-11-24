@@ -1,14 +1,15 @@
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 function App() {
-
-
   return (
     <>
-      <div>
-        <h1 className="text-center text-5xl mt-5">Hola Mundo</h1>
+      <Header />
+      <div className='min-h-screen'>
+        <h1 className="text-center text-5xl">Hola Mundo como estas</h1>
       </div>
-
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
