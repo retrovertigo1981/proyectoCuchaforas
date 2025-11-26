@@ -18,7 +18,7 @@ export const Constellation = () => {
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1.3, ease: 'easeOut' }}
           className="absolute inset-0"
         >
           <img
@@ -79,7 +79,7 @@ export const Constellation = () => {
                   x2={`${nextArtesana.posicion.x}%`}
                   y2={`${nextArtesana.posicion.y}%`}
                   stroke="url(#lineGradient)"
-                  strokeWidth="1"
+                  strokeWidth="3"
                   strokeLinecap="round"
                 />
               );
