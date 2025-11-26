@@ -9,7 +9,7 @@ import { Footer } from '@/components/Footer';
 import Proyecto from './pages/Proyecto';
 import Artesanas from './pages/Artesanas';
 // import Proceso from "./pages/Proceso";
-// import Equipo from "./pages/Equipo";
+import Equipo from "./pages/Equipo";
 // import Contacto from "./pages/Contacto";
 // import NotFound from "./pages/NotFound";
 
@@ -26,7 +26,7 @@ const App = () => (
         <Route path="/proyecto" element={<Proyecto />} />
         <Route path="/artesanas" element={<Artesanas />} />
         {/* <Route path="/proceso" element={<Proceso />} /> */}
-        {/* <Route path="/equipo" element={<Equipo />} /> */}
+        <Route path="/equipo" element={<Equipo />} />
         {/* <Route path="/contacto" element={<Contacto />} /> */}
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         {/* <Route path="*" element={<NotFound />} /> */}
