@@ -9,7 +9,7 @@ import { Footer } from '@/components/Footer';
 import Proyecto from './pages/Proyecto';
 import Artesanas from './pages/Artesanas';
 // import Proceso from "./pages/Proceso";
-import Equipo from "./pages/Equipo";
+import Equipo from './pages/Equipo';
 // import Contacto from "./pages/Contacto";
 // import NotFound from "./pages/NotFound";
 
@@ -37,23 +37,3 @@ const App = () => (
 );
 
 export default App;
-
-// import { Header } from '@/components/Header';
-// import { Footer } from '@/components/Footer';
-// import {BrowserRouter, Routes, Route } from 'react-router';
-// import Proyecto from "./pages/Proyecto";
-
-// function App() {
-//   return (
-//     <>
-//       <Header />
-//       <Routes>
-//         <Route path="/proyecto" element={<Proyecto />} />
-//       </Routes>
-
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default App;
