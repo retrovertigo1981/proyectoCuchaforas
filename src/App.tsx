@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-// import Index from "./pages/Index";
+import Inicio from '@/pages/Inicio';
 import Proyecto from './pages/Proyecto';
 import Artesanas from './pages/Artesanas';
 // import Proceso from "./pages/Proceso";
@@ -22,7 +22,7 @@ const App = () => (
       <Sonner />
       <Header />
       <Routes>
-        {/* <Route path="/" element={<Index />} /> */}
+        <Route path="/" element={<Inicio />} />
         <Route path="/proyecto" element={<Proyecto />} />
         <Route path="/artesanas" element={<Artesanas />} />
         {/* <Route path="/proceso" element={<Proceso />} /> */}
