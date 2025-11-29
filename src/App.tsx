@@ -6,11 +6,11 @@ import { Routes, Route } from 'react-router';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import Inicio from '@/pages/Inicio';
-import Proyecto from './pages/Proyecto';
-import Artesanas from './pages/Artesanas';
+import Contacto from '@/pages/Contacto';
+import Proyecto from '@/pages/Proyecto';
+import Artesanas from '@/pages/Artesanas';
+import Equipo from '@/pages/Equipo';
 // import Proceso from "./pages/Proceso";
-import Equipo from './pages/Equipo';
-// import Contacto from "./pages/Contacto";
 // import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,7 +27,7 @@ const App = () => (
         <Route path="/artesanas" element={<Artesanas />} />
         {/* <Route path="/proceso" element={<Proceso />} /> */}
         <Route path="/equipo" element={<Equipo />} />
-        {/* <Route path="/contacto" element={<Contacto />} /> */}
+        <Route path="/contacto" element={<Contacto />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

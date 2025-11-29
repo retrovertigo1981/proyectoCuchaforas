@@ -22,63 +22,63 @@ export const ArtesanaModal = ({ artesana, onClose }: ArtesanaModalProps) => {
           className="absolute inset-0 bg-background/80 backdrop-blur-md"
         />
 
-        {/* Modal */}
+        {/* Modal - Tarjeta compacta sin scroll */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="relative w-full max-w-lg bg-card rounded-2xl shadow-2xl overflow-hidden texture-grain"
+          className="relative w-full max-w-lg max-h-[90vh] bg-card rounded-2xl shadow-2xl texture-grain flex flex-col"
         >
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors"
+            className="absolute top-3 right-3 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors"
             aria-label="Cerrar"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
 
-          {/* Content */}
-          <div className="p-6 sm:p-8">
-            {/* Image placeholder - circular portrait */}
-            <div className="flex justify-center mb-6">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground">
-                <span className="text-4xl sm:text-5xl font-display">
+          {/* Content - Todo ajustado proporcionalmente */}
+          <div className="flex flex-col h-full px-6 py-5 sm:px-8 sm:py-6">
+            {/* Image placeholder - circular portrait más pequeño */}
+            <div className="flex justify-center mb-3 sm:mb-4 shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground">
+                <span className="text-2xl sm:text-3xl font-display">
                   {artesana.nombre.charAt(0)}
                 </span>
               </div>
             </div>
 
-            {/* Name and discipline */}
-            <div className="text-center mb-6">
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-2">
+            {/* Name and discipline - Espaciado reducido */}
+            <div className="text-center mb-3 sm:mb-4 shrink-0">
+              <h2 className="text-lg sm:text-xl font-display font-bold text-foreground mb-1">
                 {artesana.nombre}
               </h2>
-              <p className="text-lg text-primary font-medium mb-1">
+              <p className="text-sm sm:text-base text-primary font-medium mb-0.5">
                 {artesana.disciplina}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Región {artesana.region} de Chile
               </p>
             </div>
 
-            {/* Biography */}
-            <div className="mb-6">
-              <p className="text-base sm:text-lg text-foreground/90 leading-relaxed text-center">
+            {/* Biography - Tamaño de texto reducido */}
+            <div className="mb-3 sm:mb-4 shrink-0">
+              <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed text-center line-clamp-4">
                 {artesana.biografia}
               </p>
             </div>
 
-            {/* Work placeholder */}
-            <div className="mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-muted to-muted/50 aspect-[4/3] flex items-center justify-center">
-              <span className="text-muted-foreground text-sm">
+            {/* Work placeholder - Aspect ratio más compacto */}
+            <div className="mb-3 sm:mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-muted to-muted/50 aspect-video flex items-center justify-center shrink-0">
+              <span className="text-muted-foreground text-xs">
                 Obra representativa
               </span>
             </div>
 
-            {/* Action button */}
-            <button className="w-full py-3 px-6 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
+            {/* Action button - Más compacto */}
+            <button className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm shrink-0">
               Conocer más
             </button>
           </div>
