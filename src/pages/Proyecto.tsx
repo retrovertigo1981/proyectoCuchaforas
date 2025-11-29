@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import cucharaMadera from '@/assets/img/cucharas-madera.png';
+import cucharaMadera2 from '@/assets/img/cucharas-madera-2.png';
+import artesanaCuchaforas from '@/assets/img/artesana-cuchaforas.png';
 
 export default function Proyecto() {
   return (
@@ -61,7 +64,12 @@ export default function Proyecto() {
               </div>
               <div className="order-1 md:order-2">
                 <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <span className="text-white">Imagen: Cucharas talladas</span>
+                  {/* <span className="text-white">Imagen: Cucharas talladas</span> */}
+                  <img
+                    src={cucharaMadera}
+                    alt="Cucharas talladas"
+                    className="rounded-2xl object-contain"
+                  />
                 </div>
               </div>
             </motion.div>
@@ -77,13 +85,14 @@ export default function Proyecto() {
               className="container mx-auto px-4 sm:px-6 lg:px-8"
             >
               <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
-                <div>
-                  <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center">
-                    <span className="text-white">
-                      Imagen: Artesana trabajando
-                    </span>
-                  </div>
+                <div className="rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20">
+                  <img
+                    src={artesanaCuchaforas}
+                    alt="Artesana trabajando"
+                    className="rounded-2xl object-cover w-full h-full"
+                  />
                 </div>
+
                 <div>
                   <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed">
                     <p>
@@ -127,7 +136,12 @@ export default function Proyecto() {
               </div>
               <div className="order-1 md:order-2">
                 <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <span className="text-white">Imagen: Cucharas talladas</span>
+                  {/* <span className="text-white">Imagen: Cucharas talladas</span> */}
+                  <img
+                    src={cucharaMadera2}
+                    alt="Cucharas talladas"
+                    className="rounded-2xl object-cover"
+                  />
                 </div>
               </div>
             </motion.div>
@@ -174,7 +188,6 @@ export default function Proyecto() {
               </div>
             </motion.div>
           </section>
-
         </div>
       </main>
     </div>
