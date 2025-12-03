@@ -6,48 +6,55 @@ const equipo = [
     nombre: 'Camila Rojas Contardo',
     rol: 'Responsable del proyecto, Artesana, Dirección de Arte',
     bio: '',
-    inicial: 'C'
+    inicial: 'C',
   },
   {
     id: 2,
     nombre: 'Isabel Margarita Zambelli Matta',
     rol: 'Curaduría de la obra y relato de Cartografía Artística Digital',
     bio: '',
-    inicial: 'I'
+    inicial: 'I',
   },
   {
     id: 3,
     nombre: 'Camila Moraga y Natalia Lozano',
     rol: 'Calisma: Diseño imagen y piezas gráficas, Cartografía Artística Digital y comunicaciones',
     bio: '',
-    inicial: 'C'
+    inicial: 'C',
   },
   {
     id: 4,
     nombre: 'Alfredo Méndez',
     rol: 'Fotografía',
     bio: '',
-    inicial: 'A'
+    inicial: 'A',
   },
   {
     id: 5,
     nombre: 'Alex Daniel Barril Saldivia',
     rol: 'Gestor de participación y comunicaciones',
     bio: '',
-    inicial: 'A'
+    inicial: 'A',
   },
   {
     id: 6,
-    nombre: 'Alejandro Cofré y Sebastián Peña',
-    rol: 'Webs4Webs: Desarrollo web y soporte técnico',
+    nombre: 'Alejandro Cofré',
+    rol: 'Desarrollo web y soporte técnico',
     bio: '',
-    inicial: 'A'
-  }
+    inicial: 'A',
+  },
+  {
+    id: 7,
+    nombre: 'Sebastián Peña',
+    rol: 'Desarrollo web y soporte técnico',
+    bio: '',
+    inicial: 'S',
+  },
 ];
 
 export default function Equipo() {
   return (
-    <div className="min-h-screen bg-background">      
+    <div className="min-h-screen bg-background">
       <main className="pt-20 sm:pt-24">
         {/* Hero */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
@@ -65,7 +72,8 @@ export default function Equipo() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto"
           >
-            Un equipo interdisciplinario unido por la pasión de tejer redes y honrar historias
+            Un equipo interdisciplinario unido por la pasión de tejer redes y
+            honrar historias
           </motion.p>
         </section>
 
@@ -119,13 +127,12 @@ export default function Equipo() {
               transition={{ duration: 0.8 }}
               className="max-w-3xl mx-auto text-center"
             >
-
               <p className="text-base sm:text-lg text-foreground/80 leading-relaxed mb-8">
-               Proyecto Financiado por el Fondo Nacional de Desarrollo Cultural y las Artes, 
-                ámbito nacional de financiamiento, Convocatoria 2025, del Ministerio de las 
-                Culturas, las Artes y el Patrimonio. Gobierno de Chile
+                Proyecto Financiado por el Fondo Nacional de Desarrollo Cultural
+                y las Artes, ámbito nacional de financiamiento, Convocatoria
+                2025, del Ministerio de las Culturas, las Artes y el Patrimonio.
+                Gobierno de Chile
               </p>
-             
             </motion.div>
           </div>
         </section>
