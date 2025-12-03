@@ -95,7 +95,7 @@ const Inicio = () => {
             <img
               src={cuchafora}
               alt="cuchaforas logo"
-              className=" w-1/3 mx-auto mb-5 mt-[-30px] "
+              className="md:w-1/3 mx-auto mb-5 mt-[-30px] "
             />
             <p
               className="text-xl sm:text-2xl lg:text-3xl text-white font-medium"

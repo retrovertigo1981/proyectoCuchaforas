@@ -29,10 +29,10 @@ export const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:text-left md:self-start"
+            className="text-center md:text-left"
           >
             <h3 className="text-lg font-semibold text-white mb-4">Explora</h3>
-            <nav className="flex flex-col space-y-2">
+            <nav className="flex flex-col items-center md:items-start space-y-2">
               {footerNavigation.map((item) => (
                 <Link
                   key={item.name}
@@ -51,7 +51,7 @@ export const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="md:text-center md:self-start"
+            className="text-center md:self-start"
           >
             <Link to="/" className="inline-block mb-4 group">
               <img
@@ -72,7 +72,7 @@ export const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="md:text-right md:self-start"
+            className="md:text-right md:self-start text-center"
           >
             <p className="text-sm text-white mb-3 font-medium">
               Proyecto financiado por
@@ -80,12 +80,12 @@ export const Footer = () => {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="mb-4"
+              className=" flex flex-col items-center mb-4 md:items-end"
             >
               <img
                 src={logoMCAP}
                 alt="Ministerio de las Culturas, las Artes y el Patrimonio - Gobierno de Chile"
-                className="h-32 w-auto transition-opacity duration-300 hover:opacity-80 md:ml-auto"
+                className="h-32 w-auto transition-opacity duration-300 hover:opacity-80"
               />
             </motion.div>
             <div className="space-y-1">
