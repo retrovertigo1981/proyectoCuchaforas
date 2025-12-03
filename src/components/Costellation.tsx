@@ -89,7 +89,7 @@ export const Constellation = () => {
         </svg>
 
         {/* Title overlay */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -110,7 +110,7 @@ export const Constellation = () => {
           >
             Resistencias que brillan en las grietas
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Progress badge */}
         <motion.div
@@ -126,7 +126,7 @@ export const Constellation = () => {
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.8 }}
@@ -145,7 +145,7 @@ export const Constellation = () => {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-white" />
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* Modal */}
