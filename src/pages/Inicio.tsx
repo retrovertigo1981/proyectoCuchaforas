@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router';
 import { ChevronDown, Sparkles, Star, HandHeart } from 'lucide-react';
 import artesana1 from '@/assets/img/artesana1.jpg';
 import artesana2 from '@/assets/img/artesana2.jpg';
@@ -33,6 +34,7 @@ const heroSlides = [
 
 const Inicio = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -135,7 +137,7 @@ const Inicio = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => (window.location.href = '/artesanas')}
+            onClick={() => navigate('/artesanas')}
             className="relative group"
           >
             {/* Button */}
