@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Grid, Network } from 'lucide-react';
-import { Constellation } from '@/components/Costellation';
+import ConstellationMapComponent from '@/components/ConstellationMapV3';
 import { ArtesanaModal } from '@/components/ArtesanaModal';
 import { artesanas, disciplinas, regiones } from '@/data/artesanas';
 import type { Artesana } from '@/data/artesanas';
@@ -112,7 +112,7 @@ export default function Artesanas() {
 
         {/* Content */}
         {viewMode === 'constellation' ? (
-          <Constellation />
+          <ConstellationMapComponent />
         ) : (
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

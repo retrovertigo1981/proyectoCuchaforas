@@ -5,6 +5,10 @@ interface ConstellationPointProps {
   artesana: Artesana;
   onClick: () => void;
   index: number;
+  position?: {
+    x: number;
+    y: number;
+  };
 }
 
 const disciplinaColors: Record<string, string> = {
@@ -20,8 +24,28 @@ export const ConstellationPoint = ({
   artesana,
   onClick,
   index,
+  position,
 }: ConstellationPointProps) => {
   const colorClass = disciplinaColors[artesana.disciplina] || 'bg-primary';
+
+  // Determinar estilo de posicionamiento
+  const getPositionStyle = () => {
+    if (position) {
+      // Usar coordenadas absolutas de pantalla
+      return {
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        transform: 'translate(-50%, -50%)',
+      };
+    } else {
+      // Usar porcentajes (compatibilidad con versión anterior)
+      return {
+        left: `${artesana.posicion.x}%`,
+        top: `${artesana.posicion.y}%`,
+        transform: 'translate(-50%, -50%)',
+      };
+    }
+  };
 
   return (
     <motion.button
@@ -36,11 +60,7 @@ export const ConstellationPoint = ({
       whileHover={{ scale: 1.3 }}
       onClick={onClick}
       className="absolute group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-full"
-      style={{
-        left: `${artesana.posicion.x}%`,
-        top: `${artesana.posicion.y}%`,
-        transform: 'translate(-50%, -50%)',
-      }}
+      style={getPositionStyle()}
       aria-label={`Ver perfil de ${artesana.nombre}`}
     >
       {/* Halo exterior */}
