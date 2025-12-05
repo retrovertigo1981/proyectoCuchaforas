@@ -254,11 +254,9 @@ const Inicio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="text-center mt-20"
+            onClick={() => navigate('/proyecto')}
           >
-            <a
-              href="/proyecto"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-brand-purple-dark rounded-full font-display font-bold text-lg hover:bg-brand-mustard hover:text-background transition-colors shadow-xl"
-            >
+            <a className="inline-flex items-center gap-2 px-8 py-4 bg-white text-brand-purple-dark rounded-full font-display font-bold text-lg hover:bg-brand-mustard hover:text-background transition-colors shadow-xl">
               Conoce el Proyecto Completo
             </a>
           </motion.div>
