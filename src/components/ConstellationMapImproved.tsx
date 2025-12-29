@@ -159,8 +159,8 @@ export default function ConstellationMapImproved({
     if (containerRef.current && filteredArtesanas.length > 0) {
       const rect = containerRef.current.getBoundingClientRect();
       setViewState({
-        x: WORLD_DIMENSIONS.width / 2 - rect.width / 2,
-        y: WORLD_DIMENSIONS.height / 2 - rect.height / 2,
+        x: WORLD_DIMENSIONS.width / 2 - rect.width / 2.5,
+        y: WORLD_DIMENSIONS.height / 2 - rect.height / 2.5,
         scale: 1,
       });
     }
@@ -390,8 +390,9 @@ export default function ConstellationMapImproved({
                 onClick={() => handleArtesanaClick(artesana)}
                 className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
               >
-                {/* Halo exterior */}
-                <div className="absolute inset-0 -m-4 rounded-full bg-white/20 blur-xl animate-pulse opacity-0 group-hover:opacity-100 transition-opacity" />
+                {/* Anillo pulsante */}
+                <div className="absolute inset-0 -m-6 rounded-full border-2 border-white/60 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-ping" />
+                <div className="absolute inset-0 -m-3 rounded-full border border-white/80 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:animate-pulse" />
 
                 {/* Punto principal */}
                 <div
