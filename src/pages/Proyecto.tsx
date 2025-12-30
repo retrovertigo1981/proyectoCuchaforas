@@ -43,13 +43,13 @@ export default function Proyecto() {
                 <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed italic">
                   <p>
                     “Este proyecto emerge –sin saberlo– el mismo día en que mi
-                    hijo nació, hace diez años. Y se cristaliza hoy, cuando
-                    puedo mirar atrás, revisar nuestra historia y darme cuenta
-                    de la importancia de visibilizar las maternidades diversas,
-                    la crianza y los espacios de cuidado en soledad. Criar o
-                    cuidar a alguien sin apoyo de otro, te lleva a desarrollar
-                    una fortaleza profunda desde el amor, pero también genera
-                    una tensión y un tedio con la rutina de lo cotidiano. Y con
+                    hijo nació, hace dos años. Y se cristaliza hoy, cuando puedo
+                    mirar atrás, revisar nuestra historia y darme cuenta de la
+                    importancia de visibilizar las maternidades diversas, la
+                    crianza y los espacios de cuidado en soledad. Criar o cuidar
+                    a alguien sin apoyo de otro, te lleva a desarrollar una
+                    fortaleza profunda desde el amor, pero también genera una
+                    tensión y un tedio con la rutina de lo cotidiano. Y con
                     ello, un cansancio físico, emocional y creativo. A nivel
                     personal, fue en ese contexto de entrega y de imposibilidad
                     de tiempos creativos, cuando la mirada comenzó a enfocarse

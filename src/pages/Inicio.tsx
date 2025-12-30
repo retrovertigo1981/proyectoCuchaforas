@@ -141,9 +141,9 @@ const Inicio = () => {
             className="relative group"
           >
             {/* Button */}
-            <div className="relative flex items-center gap-3 px-8 py-4 mt-[-20px] bg-brand-mustard text-background rounded-full font-display font-bold text-lg shadow-2xl border-2 border-brand-mustard-light hover:bg-brand-mustard-light transition-colors">
+            <div className="relative flex items-center gap-3 px-8 py-4 mt-[-20px] text-background rounded-full font-display font-bold text-lg shadow-2xl border-2 border-brand-mustard-light hover:bg-brand-mustard-light transition-colors">
               <Sparkles className="w-5 h-5" />
-              <span>Explorar la Constelación</span>
+              <span>Explorar la Cartografía Artística</span>
               <Sparkles className="w-5 h-5" />
             </div>
           </motion.button>
