@@ -5,6 +5,7 @@ export interface Artesana {
   region: 'Norte' | 'Centro' | 'Sur' | 'Insular';
   biografia: string;
   imagenUrl?: string;
+  imagenesTrabajo?: string[]; // Imágenes de trabajo (opcional)
   // Posición en la constelación (porcentaje de la imagen)
   posicion: {
     x: number; // 0-100
@@ -19,6 +20,8 @@ export const artesanas: Artesana[] = [
     disciplina: 'Textil',
     region: 'Sur',
     biografia: 'Tejedora mapuche que transmite historias ancestrales en cada witral, entrelazando hilos mientras cuida a sus nietos.',
+    imagenUrl: '/src/assets/img/artesana1.jpg',
+    imagenesTrabajo: ['/src/assets/img/cucharas-madera.png'],
     posicion: { x: 15, y: 25 }
   },
   {
@@ -27,6 +30,8 @@ export const artesanas: Artesana[] = [
     disciplina: 'Cerámica',
     region: 'Centro',
     biografia: 'Alfarera de Pomaire que moldea arcilla entre siestas y pañales, manteniendo vivo el oficio de su abuela.',
+    imagenUrl: '/src/assets/img/artesana2.jpg',
+    imagenesTrabajo: ['/src/assets/img/cucharas-madera-2.png'],
     posicion: { x: 35, y: 40 }
   },
   {
@@ -35,6 +40,7 @@ export const artesanas: Artesana[] = [
     disciplina: 'Madera',
     region: 'Norte',
     biografia: 'Talladora del Norte Grande que esculpe en algarrobo las formas del desierto mientras sus hijas juegan a sus pies.',
+    imagenUrl: '/src/assets/img/artesana3.jpg',
     posicion: { x: 60, y: 30 }
   },
   {

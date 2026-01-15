@@ -133,6 +133,7 @@ export default function ConstellationMapImproved({
     startViewX: 0,
     startViewY: 0,
   });
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -163,8 +164,10 @@ export default function ConstellationMapImproved({
         y: WORLD_DIMENSIONS.height / 2 - rect.height / 2.5,
         scale: 1,
       });
+      // Marcar como inicializado para habilitar cursor
+      setIsInitialized(true);
     }
-  }, []);
+  }, [filteredArtesanas.length]);
 
   // Transformación mundo → pantalla
   const worldToScreen = useCallback(
@@ -357,7 +360,13 @@ export default function ConstellationMapImproved({
       {/* Contenedor del mapa */}
       <div
         ref={containerRef}
-        className={`absolute inset-0 ${dragState.isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`absolute inset-0 ${
+          isInitialized
+            ? dragState.isDragging
+              ? 'cursor-grabbing'
+              : 'cursor-grab'
+            : 'cursor-default'
+        }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

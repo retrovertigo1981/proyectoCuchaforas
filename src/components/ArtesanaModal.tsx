@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { Artesana } from '@/data/artesanas';
+import { ArtesanaDetail } from './ArtesanaDetail';
 
 interface ArtesanaModalProps {
   artesana: Artesana | null;
@@ -8,7 +10,19 @@ interface ArtesanaModalProps {
 }
 
 export const ArtesanaModal = ({ artesana, onClose }: ArtesanaModalProps) => {
+  const [showDetail, setShowDetail] = useState(false);
+
   if (!artesana) return null;
+
+  // Si se muestra el detalle, renderizar el componente de detalle
+  if (showDetail) {
+    return (
+      <ArtesanaDetail
+        artesanaId={artesana.id}
+        onBack={() => setShowDetail(false)}
+      />
+    );
+  }
 
   return (
     <AnimatePresence>
@@ -43,11 +57,27 @@ export const ArtesanaModal = ({ artesana, onClose }: ArtesanaModalProps) => {
           <div className="flex flex-col h-full px-6 py-5 sm:px-8 sm:py-6">
             {/* Image placeholder - circular portrait más pequeño */}
             <div className="flex justify-center mb-3 sm:mb-4 shrink-0">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground">
-                <span className="text-2xl sm:text-3xl font-display">
-                  {artesana.nombre.charAt(0)}
-                </span>
-              </div>
+              {artesana.imagenUrl ? (
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-gradient-to-br from-primary to-accent">
+                  <img
+                    src={artesana.imagenUrl}
+                    alt={artesana.nombre}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to initials if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.parentElement!.innerHTML = `<span class="text-white text-2xl sm:text-3xl font-display flex items-center justify-center h-full">${artesana.nombre.charAt(0)}</span>`;
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground">
+                  <span className="text-2xl sm:text-3xl font-display">
+                    {artesana.nombre.charAt(0)}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Name and discipline - Espaciado reducido */}
@@ -72,13 +102,32 @@ export const ArtesanaModal = ({ artesana, onClose }: ArtesanaModalProps) => {
 
             {/* Work placeholder - Aspect ratio más compacto */}
             <div className="mb-3 sm:mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-muted to-muted/50 aspect-video flex items-center justify-center shrink-0">
-              <span className="text-muted-foreground text-xs">
-                Obra representativa
-              </span>
+              {artesana.imagenesTrabajo &&
+              artesana.imagenesTrabajo.length > 0 ? (
+                <img
+                  src={artesana.imagenesTrabajo[0]}
+                  alt={`Trabajo de ${artesana.nombre}`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to placeholder if image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML =
+                      '<span class="text-muted-foreground text-xs">Obra representativa</span>';
+                  }}
+                />
+              ) : (
+                <span className="text-muted-foreground text-xs">
+                  Obra representativa
+                </span>
+              )}
             </div>
 
             {/* Action button - Más compacto */}
-            <button className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm shrink-0">
+            <button
+              onClick={() => setShowDetail(true)}
+              className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm shrink-0"
+            >
               Conocer más
             </button>
           </div>
