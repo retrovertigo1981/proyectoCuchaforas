@@ -71,16 +71,37 @@ export const transformArtesanasFromApi = (apiArtesanas: ArtesanaApi[]): BasicArt
 // Función para obtener artesanas desde la API con manejo de errores
 export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
   try {
-    const response = await fetch('https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas');
+    // Obtener todas las artesanas usando paginación
+    const allArtesanas: ArtesanaApi[] = [];
+    let page = 1;
+    const perPage = 100; // Máximo permitido por WordPress
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    while (true) {
+      const response = await fetch(`https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas?page=${page}&per_page=${perPage}`);
+
+      if (!response.ok) {
+        if (response.status === 400 && page > 1) {
+          // No hay más páginas
+          break;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const apiArtesanas: ArtesanaApi[] = await response.json();
+
+      if (apiArtesanas.length === 0) {
+        break;
+      }
+
+      allArtesanas.push(...apiArtesanas);
+      page++;
+
+      // Seguridad: evitar bucles infinitos
+      if (page > 10) break;
     }
 
-    const apiArtesanas: ArtesanaApi[] = await response.json();
-
     // Transformar los datos de la API al formato de la aplicación
-    return transformArtesanasFromApi(apiArtesanas);
+    return transformArtesanasFromApi(allArtesanas);
 
   } catch (error) {
     console.error('Error fetching artesanas from API:', error);
