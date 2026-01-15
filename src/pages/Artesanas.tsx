@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Grid, Map } from 'lucide-react';
+import { Grid, Map, Network } from 'lucide-react';
 import ConstellationMapImproved from '@/components/ConstellationMapImproved';
 import { ArtesanaModal } from '@/components/ArtesanaModal';
-import { disciplinas, regiones } from '@/data/artesanas';
+import { regiones } from '@/data/artesanas';
 import { useArtesanas } from '@/hooks/useArtesanas';
 import type { Artesana } from '@/data/artesanas';
 
@@ -20,7 +20,7 @@ export default function Artesanas() {
   );
 
   // Usar el hook personalizado para manejo de datos
-  const { artesanas, loading, error } = useArtesanas();
+  const { artesanas, loading, error, disciplinas } = useArtesanas();
 
   // Filtrar artesanas (solo para la vista de galería)
   const filteredArtesanas = artesanas.filter((artesana) => {
@@ -42,6 +42,12 @@ export default function Artesanas() {
     Cestería: 'from-orange-400 to-orange-600',
     Orfebrería: 'from-yellow-300 to-yellow-500',
     Tejido: 'from-indigo-400 to-indigo-600',
+  };
+
+  // Función para obtener un color aleatorio
+  const getRandomColor = () => {
+    const colors = Object.values(disciplinaColors);
+    return colors[Math.floor(Math.random() * colors.length)];
   };
 
   return (
@@ -229,8 +235,7 @@ export default function Artesanas() {
                         {/* Portrait placeholder */}
                         <div
                           className={`aspect-square bg-gradient-to-br ${
-                            disciplinaColors[artesana.disciplina] ||
-                            'from-gray-400 to-gray-600'
+                            getRandomColor() || 'from-gray-400 to-gray-600'
                           } flex items-center justify-center`}
                         >
                           {artesana.imagenUrl ? (

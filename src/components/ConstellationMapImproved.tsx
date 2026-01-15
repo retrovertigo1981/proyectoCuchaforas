@@ -64,6 +64,12 @@ const disciplinaColors: Record<string, string> = {
   Tejido: 'from-indigo-400 to-indigo-600',
 };
 
+// Función para obtener un color aleatorio
+const getRandomColor = () => {
+  const colors = Object.values(disciplinaColors);
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 // Función para distribuir artesanas radialmente
 const distributeRadially = (
   artesanas: BasicArtesanaType[],
@@ -405,10 +411,7 @@ export default function ConstellationMapImproved({
 
                 {/* Punto principal */}
                 <div
-                  className={`relative w-4 h-4 rounded-full bg-gradient-to-br ${
-                    disciplinaColors[artesana.disciplina] ||
-                    'from-white to-gray-300'
-                  } shadow-lg`}
+                  className={`relative w-4 h-4 rounded-full bg-gradient-to-br ${getRandomColor()} shadow-lg`}
                 />
 
                 {/* Tooltip */}

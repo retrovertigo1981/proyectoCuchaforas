@@ -12,6 +12,7 @@ interface UseArtesanasReturn {
     region?: string | null;
   }) => Artesana[];
   clearCache: () => void;
+  disciplinas: string[];
 }
 
 export const useArtesanas = (): UseArtesanasReturn => {
@@ -57,6 +58,12 @@ export const useArtesanas = (): UseArtesanasReturn => {
     };
   }, [artesanas]);
 
+  // Disciplinas únicas extraídas de las artesanas
+  const disciplinas = useMemo(() => {
+    const set = new Set(artesanas.map(a => a.disciplina));
+    return Array.from(set).sort();
+  }, [artesanas]);
+
   // Función para limpiar cache
   const clearCache = () => {
     clearArtesanasCache();
@@ -69,5 +76,6 @@ export const useArtesanas = (): UseArtesanasReturn => {
     refetch,
     filteredArtesanas,
     clearCache,
+    disciplinas,
   };
 };
