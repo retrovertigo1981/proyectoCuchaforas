@@ -22,11 +22,12 @@ const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
       region.includes('aysén') || region.includes('magallanes') ||
       region.includes('sur')) {
     return 'Sur';
-  }
+ }
 
   // Por defecto Centro si no se puede determinar
   return 'Centro';
 };
+
 
 // Función para generar posición aleatoria en la constelación
 const generateRandomPosition = () => {
