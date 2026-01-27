@@ -24,6 +24,11 @@ const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
     return 'Sur';
  }
 
+ if(region.includes('internacional')) {
+  return 'Internacional';
+ };
+
+
   // Por defecto Centro si no se puede determinar
   return 'Centro';
 };

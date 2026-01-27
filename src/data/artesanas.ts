@@ -1,8 +1,8 @@
 export interface Artesana {
   id: string;
   nombre: string;
-  disciplina: 'Cerámica' | 'Textil' | 'Madera' | 'Cestería' | 'Orfebrería' | 'Tejido';
-  region: 'Norte' | 'Centro' | 'Sur' | 'Insular';
+  disciplina: string;
+  region: 'Norte' | 'Centro' | 'Sur' | 'Insular' | 'Internacional';
   biografia: string;
   imagenUrl?: string;
   imagenesTrabajo?: string[]; // Imágenes de trabajo (opcional)
@@ -85,5 +85,5 @@ export const artesanas: Artesana[] = [
   }
 ];
 
-export const disciplinas = ['Cerámica', 'Textil', 'Madera', 'Cestería', 'Orfebrería', 'Tejido'] as const;
-export const regiones = ['Norte', 'Centro', 'Sur', 'Insular'] as const;
+// export const disciplinas = ['Cerámica', 'Textil', 'Madera', 'Cestería', 'Orfebrería', 'Tejido'] as const;
+export const regiones = ['Norte', 'Centro', 'Sur', 'Insular', 'Internacional'] as const;
