@@ -6,6 +6,8 @@ import { ArtesanaModal } from '@/components/ArtesanaModal';
 import { regiones } from '@/data/artesanas';
 import { useArtesanas } from '@/hooks/useArtesanas';
 import type { Artesana } from '@/data/artesanas';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 type ViewMode = 'constellation' | 'gallery';
 
@@ -52,10 +54,11 @@ export default function Artesanas() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main>
+      <Header />
+      <main className="min-h-screen">
         {/* Loading State */}
         {loading && (
-          <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="flex items-center justify-center min-h-[90vh]">
             <div className="text-center">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
               <p className="text-muted-foreground">Cargando artesanas...</p>
@@ -286,6 +289,7 @@ export default function Artesanas() {
           onClose={() => setSelectedArtesana(null)}
         />
       )}
+      <Footer />
     </div>
   );
 }

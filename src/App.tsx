@@ -3,8 +3,8 @@ import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
+// import { Header } from '@/components/Header';
+// import { Footer } from '@/components/Footer';
 import Inicio from '@/pages/Inicio';
 import Contacto from '@/pages/Contacto';
 import Proyecto from '@/pages/Proyecto';
@@ -20,7 +20,7 @@ const App = () => (
     <TooltipProvider>
       {/* <Toaster /> */}
       <Sonner />
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/proyecto" element={<Proyecto />} />
@@ -31,7 +31,7 @@ const App = () => (
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </TooltipProvider>
   </QueryClientProvider>
 );
