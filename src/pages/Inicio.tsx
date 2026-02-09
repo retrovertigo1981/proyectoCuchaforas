@@ -1,21 +1,13 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { ChevronDown, Sparkles, Star, HandHeart } from 'lucide-react';
+import { Navbar } from '@/components/Navbar';
+import { useMobile } from '@/hooks/useMobile';
 import artesana1 from '@/assets/img/artesana1.jpg';
-import artesana2 from '@/assets/img/artesana2.jpg';
-import artesana3 from '@/assets/img/artesana3.jpg';
 import cuchafora from '@/assets/img/cuchaforas_logo_negro - copia.png';
-import { linearGradient } from 'motion/react-client';
 
 const Inicio = () => {
   const navigate = useNavigate();
-  // const scrollToContent = () => {
-  //   window.scrollTo({
-  //     top: window.innerHeight,
-  //     behavior: 'smooth',
-  //   });
-  // };
-
+  const isMobile = useMobile(426);
   return (
     <div className="h-screen bg-background overflow-hidden">
       <motion.img
@@ -31,12 +23,16 @@ const Inicio = () => {
         }}
         className="h-full w-full object-cover brightness-[0.6]"
       />
+      <Navbar />
+
       <div className="absolute inset-0 top-52 flex flex-col">
         <img
           src={cuchafora}
           alt="cuchaforas logo"
-          className="md:w-1/3 mx-auto mb-5 mt-[-30px] "
+          className={`${isMobile ? 'w-80' : 'w-1/3'}  mx-auto mb-14 mt-[-50px]`}
         />
+
+        {/* md:w-1/3 */}
 
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
