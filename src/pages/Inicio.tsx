@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
+import { useEffect, useRef } from 'react';
+import { Howl } from 'howler';
 import { Navbar } from '@/components/Navbar';
 import { useMobile } from '@/hooks/useMobile';
 import artesana1 from '@/assets/img/artesana1.jpg';
@@ -8,6 +10,35 @@ import cuchafora from '@/assets/img/cuchaforas_logo_negro - copia.png';
 const Inicio = () => {
   const navigate = useNavigate();
   const isMobile = useMobile(426);
+  const welcomeSoundRef = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    // Inicializar el sonido de bienvenida
+    welcomeSoundRef.current = new Howl({
+      src: ['/sonidos/Voz_cuchaforas.mp3'],
+      volume: 0.7,
+      preload: true,
+    });
+
+    // Reproducir cuando la página termine de cargar
+    const onPageLoad = () => {
+      if (welcomeSoundRef.current) {
+        welcomeSoundRef.current.play();
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      onPageLoad();
+    } else {
+      window.addEventListener('load', onPageLoad);
+    }
+
+    return () => {
+      window.removeEventListener('load', onPageLoad);
+      welcomeSoundRef.current?.unload();
+    };
+  }, []);
+
   return (
     <div className="h-screen bg-background overflow-hidden">
       <motion.img

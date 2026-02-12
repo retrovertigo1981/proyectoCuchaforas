@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import { Howl } from 'howler';
 import { ArtesanaModal } from './ArtesanaModal';
 import type { Artesana as BasicArtesanaType } from '@/data/artesanas';
 
@@ -164,6 +165,76 @@ export default function ConstellationMapImproved({
   const [isInitialized, setIsInitialized] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const hoverSoundRef = useRef<Howl | null>(null);
+  const fadeTimeoutRef = useRef<number | null>(null);
+  const isAudioInitialized = useRef(false);
+
+  // Inicializar el sonido de hover
+  useEffect(() => {
+    hoverSoundRef.current = new Howl({
+      src: ['/sonidos/Sonido_lijado_cucharas.m4a'],
+      volume: 0.5,
+      preload: true,
+    });
+
+    return () => {
+      if (fadeTimeoutRef.current) {
+        clearTimeout(fadeTimeoutRef.current);
+      }
+      hoverSoundRef.current?.unload();
+    };
+  }, []);
+
+  // Función para inicializar el audio después de la primera interacción
+  const initializeAudio = useCallback(() => {
+    if (!isAudioInitialized.current && hoverSoundRef.current) {
+      // Reproducir y pausar inmediatamente para "desbloquear" el audio
+      hoverSoundRef.current.play();
+      hoverSoundRef.current.stop();
+      isAudioInitialized.current = true;
+    }
+  }, []);
+
+  // Función para reproducir el sonido con transición suave
+  const playHoverSound = useCallback(() => {
+    // Inicializar audio si es necesario
+    if (!isAudioInitialized.current) {
+      initializeAudio();
+    }
+
+    if (hoverSoundRef.current) {
+      // Limpiar timeout anterior si existe
+      if (fadeTimeoutRef.current) {
+        clearTimeout(fadeTimeoutRef.current);
+      }
+
+      // Si ya está sonando, hacer fade out rápido antes de reiniciar
+      if (hoverSoundRef.current.playing()) {
+        hoverSoundRef.current.fade(hoverSoundRef.current.volume(), 0, 150);
+        setTimeout(() => {
+          if (hoverSoundRef.current) {
+            hoverSoundRef.current.stop();
+            hoverSoundRef.current.volume(0.5);
+            hoverSoundRef.current.play();
+          }
+        }, 150);
+      } else {
+        // Si no está sonando, reproducir directamente
+        hoverSoundRef.current.volume(0.5);
+        hoverSoundRef.current.play();
+      }
+      
+      // Hacer fade out después de 2.5 segundos y detener después de 3 segundos
+      fadeTimeoutRef.current = window.setTimeout(() => {
+        if (hoverSoundRef.current && hoverSoundRef.current.playing()) {
+          hoverSoundRef.current.fade(0.5, 0, 500);
+          setTimeout(() => {
+            hoverSoundRef.current?.stop();
+          }, 500);
+        }
+      }, 2500);
+    }
+  }, [initializeAudio]);
 
   // Distribuir artesanas radialmente
   const worldArtesanas = useMemo(() => {
@@ -227,6 +298,7 @@ export default function ConstellationMapImproved({
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
+      initializeAudio(); // Inicializar audio en la primera interacción
       setDragState({
         isDragging: true,
         startX: e.clientX,
@@ -235,7 +307,7 @@ export default function ConstellationMapImproved({
         startViewY: viewState.y,
       });
     },
-    [viewState]
+    [viewState, initializeAudio]
   );
 
   const handleMouseMove = useCallback(
@@ -424,6 +496,7 @@ export default function ConstellationMapImproved({
             >
               <motion.button
                 whileHover={{ scale: 1.3 }}
+                onMouseEnter={playHoverSound}
                 onClick={() => handleArtesanaClick(artesana)}
                 className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
               >
