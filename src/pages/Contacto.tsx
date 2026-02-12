@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Instagram, Facebook, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { Banner } from '@/components/Banner';
+import { Footer } from '@/components/Footer';
 
 export default function Contacto() {
   const [formData, setFormData] = useState({
@@ -37,6 +39,7 @@ export default function Contacto() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Banner />
       <main className="pt-20 sm:pt-24">
         {/* Hero */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
@@ -44,10 +47,12 @@ export default function Contacto() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6"
+            className="flex justify-center items-center gap-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-black mb-6"
           >
+            <div className="w-9 h-9 bg-black rounded-full"></div>
             Contacto
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -251,6 +256,7 @@ export default function Contacto() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -76,13 +76,13 @@ export const Navbar = () => {
   useClickOutside(socialRef, () => setSocialOpen(false));
 
   return (
-    <div className="min-w-screen h-20 flex justify-end z-50 p-5">
+    <div className=" min-w-screen h-20 flex justify-end z-50 p-5">
       <div
-        className={`fixed flex flex-col items-end gap-6 z-[60] ${isMobile ? 'top-5 right-5' : 'top-11 right-11'}`}
+        className={`absolute flex flex-col items-end gap-6 z-[50] ${isMobile ? 'top-10 right-8' : 'top-10 right-10'}`}
       >
         {/* Botón de Menú */}
         <motion.button
-          className={`flex items-center ${menuOpen || socialOpen ? 'hidden' : 'block'}`}
+          className={` flex items-center ${menuOpen || socialOpen ? 'hidden' : 'block'}`}
           initial="initial"
           whileHover="hover"
           onClick={() => {

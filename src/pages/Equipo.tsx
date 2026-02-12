@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { Banner } from '@/components/Banner';
+import { Footer } from '@/components/Footer';
 
 const equipo = [
   {
@@ -48,13 +50,14 @@ const equipo = [
     nombre: 'Sebastián Peña',
     rol: 'Desarrollo web y soporte técnico',
     bio: '',
-    inicial: 'S',
+    inicial: 'SP',
   },
 ];
 
 export default function Equipo() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-brand-purple-medium">
+      <Banner />
       <main className="pt-20 sm:pt-24">
         {/* Hero */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
@@ -62,15 +65,16 @@ export default function Equipo() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6"
+            className="flex justify-center items-center gap-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6"
           >
+            <div className="w-9 h-9 bg-white rounded-full"></div>
             Quiénes Somos
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-white max-w-3xl mx-auto"
           >
             Un equipo interdisciplinario unido por la pasión de tejer redes y
             honrar historias
@@ -93,7 +97,7 @@ export default function Equipo() {
                   {/* Portrait */}
                   <div className="mb-6 relative">
                     <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-br from-primary via-accent to-secondary flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                      <span className="text-5xl sm:text-6xl font-display font-bold text-primary-foreground">
+                      <span className="text-5xl sm:text-6xl font-display font-bold text-white">
                         {miembro.inicial}
                       </span>
                     </div>
@@ -102,13 +106,13 @@ export default function Equipo() {
                   </div>
 
                   {/* Info */}
-                  <h3 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-2">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-2">
                     {miembro.nombre}
                   </h3>
-                  <p className="text-base sm:text-lg text-primary font-medium mb-3">
+                  <p className="text-base sm:text-lg text-black/60 font-medium mb-3">
                     {miembro.rol}
                   </p>
-                  <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-xs">
+                  <p className="text-sm sm:text-base text-black/50 leading-relaxed max-w-xs">
                     {miembro.bio}
                   </p>
                 </div>
@@ -118,7 +122,7 @@ export default function Equipo() {
         </section>
 
         {/* Collaboration section */}
-        <section className="bg-muted/30 py-16 sm:py-20">
+        <section className="bg-brand-purple-medium py-16 sm:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -127,7 +131,7 @@ export default function Equipo() {
               transition={{ duration: 0.8 }}
               className="max-w-3xl mx-auto text-center"
             >
-              <p className="text-base sm:text-lg text-foreground/80 leading-relaxed mb-8">
+              <p className="text-base sm:text-lg text-black/60 leading-relaxed mb-8">
                 Proyecto Financiado por el Fondo Nacional de Desarrollo Cultural
                 y las Artes, ámbito nacional de financiamiento, Convocatoria
                 2025, del Ministerio de las Culturas, las Artes y el Patrimonio.
@@ -137,6 +141,7 @@ export default function Equipo() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

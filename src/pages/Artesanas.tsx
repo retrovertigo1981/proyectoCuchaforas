@@ -6,10 +6,38 @@ import { ArtesanaModal } from '@/components/ArtesanaModal';
 import { regiones } from '@/data/artesanas';
 import { useArtesanas } from '@/hooks/useArtesanas';
 import type { Artesana } from '@/data/artesanas';
-import { Header } from '@/components/Header';
+// import { Header } from '@/components/Header';
+import { Banner } from '@/components/Banner';
 import { Footer } from '@/components/Footer';
 
 type ViewMode = 'constellation' | 'gallery';
+
+// Paleta de colores proporcionada (en hexadecimal) - misma que en ConstellationMapImproved
+const COLOR_PALETTE = [
+  '#7e7bab',
+  '#ffd633',
+  '#9695c3',
+  '#656293',
+  '#bab8dd',
+  '#feca17',
+  '#b28710',
+  '#d9a906',
+  '#ef7b6f',
+  '#e7312b',
+  '#cb281a',
+  '#ea5a4c',
+];
+
+// Función para obtener un color consistente basado en el ID de la artesana
+// Esto asegura que cada artesana siempre tenga el mismo color
+const getColorForArtesana = (artesanaId: string): string => {
+  let hash = 0;
+  for (let i = 0; i < artesanaId.length; i++) {
+    hash = artesanaId.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % COLOR_PALETTE.length;
+  return COLOR_PALETTE[index];
+};
 
 export default function Artesanas() {
   const [viewMode, setViewMode] = useState<ViewMode>('constellation');
@@ -37,24 +65,9 @@ export default function Artesanas() {
     setSelectedRegion(null);
   };
 
-  const disciplinaColors: Record<string, string> = {
-    Cerámica: 'from-red-400 to-red-600',
-    Textil: 'from-purple-400 to-purple-600',
-    Madera: 'from-yellow-500 to-yellow-700',
-    Cestería: 'from-orange-400 to-orange-600',
-    Orfebrería: 'from-yellow-300 to-yellow-500',
-    Tejido: 'from-indigo-400 to-indigo-600',
-  };
-
-  // Función para obtener un color aleatorio
-  const getRandomColor = () => {
-    const colors = Object.values(disciplinaColors);
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Banner />
       <main className="min-h-screen">
         {/* Loading State */}
         {loading && (
@@ -89,7 +102,7 @@ export default function Artesanas() {
         {!loading && !error && (
           <>
             {/* Header con filtros - SOLO visible en modo galería */}
-            <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-16 sm:top-20 z-40">
+            <div className="border-b border-border bg-card/90 backdrop-blur-sm relative  top-16 sm:top-20 z-40">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   {/* Toggles de vista */}
@@ -223,7 +236,7 @@ export default function Artesanas() {
               />
             ) : (
               // Modo Galería
-              <div className=" container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="relative mt-11 container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {filteredArtesanas.map((artesana, index) => (
                     <motion.div
@@ -237,9 +250,10 @@ export default function Artesanas() {
                       <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         {/* Portrait placeholder */}
                         <div
-                          className={`aspect-square bg-gradient-to-br ${
-                            getRandomColor() || 'from-gray-400 to-gray-600'
-                          } flex items-center justify-center`}
+                          className="aspect-square flex items-center justify-center"
+                          style={{
+                            backgroundColor: getColorForArtesana(artesana.id),
+                          }}
                         >
                           {artesana.imagenUrl ? (
                             <img

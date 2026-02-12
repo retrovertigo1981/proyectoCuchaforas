@@ -20,6 +20,7 @@ interface Artesana extends BasicArtesanaType {
   screenY: number;
   opacity: number;
   scale: number;
+  color: string;
 }
 
 interface ViewState {
@@ -54,35 +55,50 @@ const ZOOM_LEVELS = {
   step: 0.2,
 };
 
-// Colores por disciplina
-const disciplinaColors: Record<string, string> = {
-  Cerámica: 'from-red-400 to-red-600',
-  Textil: 'from-purple-400 to-purple-600',
-  Madera: 'from-yellow-500 to-yellow-700',
-  Cestería: 'from-orange-400 to-orange-600',
-  Orfebrería: 'from-yellow-300 to-yellow-500',
-  Tejido: 'from-indigo-400 to-indigo-600',
-};
+// Paleta de colores proporcionada (en hexadecimal)
+const COLOR_PALETTE = [
+  '#7e7bab',
+  '#ffd633',
+  '#9695c3',
+  '#656293',
+  '#bab8dd',
+  '#feca17',
+  '#b28710',
+  '#d9a906',
+  '#ef7b6f',
+  '#e7312b',
+  '#cb281a',
+  '#ea5a4c',
+];
 
-// Función para obtener un color aleatorio
-const getRandomColor = () => {
-  const colors = Object.values(disciplinaColors);
-  return colors[Math.floor(Math.random() * colors.length)];
+// Función para obtener un color consistente basado en el ID de la artesana
+// Esto asegura que cada artesana siempre tenga el mismo color
+const getColorForArtesana = (artesanaId: string): string => {
+  // Usar el ID para generar un índice consistente
+  let hash = 0;
+  for (let i = 0; i < artesanaId.length; i++) {
+    hash = artesanaId.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % COLOR_PALETTE.length;
+  return COLOR_PALETTE[index];
 };
 
 // Función para distribuir artesanas radialmente
-const distributeRadially = (
-  artesanas: BasicArtesanaType[],
-  totalCapacity = 365
-): Artesana[] => {
+const distributeRadially = (artesanas: BasicArtesanaType[]): Artesana[] => {
   const centerX = WORLD_DIMENSIONS.width / 2;
   const centerY = WORLD_DIMENSIONS.height / 2;
 
-  // Configuración de anillos concéntricos
-  const maxRadius =
-    Math.min(WORLD_DIMENSIONS.width, WORLD_DIMENSIONS.height) * 0.4;
-  const numRings = Math.ceil(Math.sqrt(totalCapacity / Math.PI));
-  const pointsPerRing = Math.ceil(artesanas.length / numRings);
+  // Calcular radio máximo adaptativo según el número de artesanas
+  // Para pocas artesanas: radio más pequeño para que quepan en pantalla
+  // Para muchas artesanas: radio más grande para que se distribuyan bien
+  const count = artesanas.length;
+  const baseRadius = 400; // Radio base para ~10 artesanas
+  const extraRadius = Math.sqrt(count) * 80; // Añadir radio según cantidad
+  const maxRadius = baseRadius + extraRadius;
+
+  // Configuración de anillos
+  const numRings = Math.max(1, Math.ceil(Math.sqrt(count / Math.PI)));
+  const pointsPerRing = Math.ceil(count / numRings);
 
   return artesanas.map((artesana, index) => {
     // Determinar en qué anillo va este punto
@@ -93,19 +109,24 @@ const distributeRadially = (
       artesanas.length - ringIndex * pointsPerRing
     );
 
-    // Radio del anillo (crece de forma más suave)
-    const ringProgress = ringIndex / Math.max(numRings - 1, 1);
+    // Radio del anillo - usar transformación no lineal para evitar radio 0
+    const ringProgress = Math.pow(ringIndex / Math.max(numRings - 1, 1), 0.7);
+    const minRingSpacing = 120; // Radio mínimo entre anillos (aumentado para más espacio)
     const radius =
-      maxRadius * Math.pow(ringProgress, 0.7) * (0.3 + Math.random() * 0.4);
+      minRingSpacing +
+      (maxRadius - minRingSpacing) * ringProgress * (0.9 + Math.random() * 0.2);
 
-    // Ángulo con variación aleatoria
+    // Ángulo con más aleatoriedad para dispersar puntos
     const baseAngle = (positionInRing / totalInRing) * 2 * Math.PI;
-    const angleVariation = (Math.random() - 0.5) * 0.3;
+    const angleVariation = (Math.random() - 0.5) * 0.8;
     const angle = baseAngle + angleVariation;
 
     // Posición final
     const x = centerX + Math.cos(angle) * radius;
     const y = centerY + Math.sin(angle) * radius;
+
+    // Asignar color consistente basado en el ID
+    const color = getColorForArtesana(artesana.id);
 
     return {
       ...artesana,
@@ -115,6 +136,7 @@ const distributeRadially = (
       screenY: 0,
       opacity: 1,
       scale: 1,
+      color,
     };
   });
 };
@@ -409,13 +431,17 @@ export default function ConstellationMapImproved({
                 <div className="absolute inset-0 -m-6 rounded-full border-2 border-white/60 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-ping" />
                 <div className="absolute inset-0 -m-3 rounded-full border border-white/80 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:animate-pulse" />
 
-                {/* Punto principal */}
+                {/* Punto principal con color de la paleta */}
                 <div
-                  className={`relative w-4 h-4 rounded-full bg-gradient-to-br ${getRandomColor()} shadow-lg`}
+                  className="relative w-4 h-4 rounded-full shadow-lg"
+                  style={{
+                    background: artesana.color,
+                    boxShadow: `0 0 10px ${artesana.color}80`,
+                  }}
                 />
 
                 {/* Tooltip */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <div className="font-semibold">{artesana.nombre}</div>
                   <div className="text-xs text-gray-300">
                     {artesana.disciplina}
@@ -426,7 +452,7 @@ export default function ConstellationMapImproved({
           ))}
         </AnimatePresence>
 
-        {/* Líneas de conexión */}
+        {/* Líneas de conexión - conectar puntos cercanos en el espacio */}
         {filteredArtesanas.length > 1 && (
           <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
             <defs>
@@ -441,32 +467,34 @@ export default function ConstellationMapImproved({
                 <stop offset="100%" stopColor="rgba(255,255,255,0.2)" />
               </linearGradient>
             </defs>
-            {filteredArtesanas.slice(0, -1).map((artesana, i) => {
-              const nextArtesana = filteredArtesanas[i + 1];
-              const screenPos1 = worldToScreen(artesana.x, artesana.y);
-              const screenPos2 = worldToScreen(nextArtesana.x, nextArtesana.y);
-              const distance = Math.sqrt(
-                Math.pow(artesana.x - nextArtesana.x, 2) +
-                  Math.pow(artesana.y - nextArtesana.y, 2)
-              );
-
-              // Solo dibujar líneas entre puntos cercanos
-              if (distance < 300) {
-                return (
-                  <line
-                    key={`line-${i}`}
-                    x1={screenPos1.x}
-                    y1={screenPos1.y}
-                    x2={screenPos2.x}
-                    y2={screenPos2.y}
-                    stroke="url(#lineGradient)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                );
-              }
-              return null;
-            })}
+            {/* Conectar todos los puntos que estén cerca entre sí */}
+            {filteredArtesanas.flatMap((artesana, i) =>
+              filteredArtesanas
+                .slice(i + 1)
+                .filter((other) => {
+                  const dx = artesana.x - other.x;
+                  const dy = artesana.y - other.y;
+                  const distance = Math.sqrt(dx * dx + dy * dy);
+                  return distance < 600; // Umbral aumentado para conectar más puntos
+                })
+                .map((other, j) => {
+                  const screenPos1 = worldToScreen(artesana.x, artesana.y);
+                  const screenPos2 = worldToScreen(other.x, other.y);
+                  return (
+                    <line
+                      key={`line-${i}-${j}`}
+                      x1={screenPos1.x}
+                      y1={screenPos1.y}
+                      x2={screenPos2.x}
+                      y2={screenPos2.y}
+                      stroke="url(#lineGradient)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeOpacity="0.4"
+                    />
+                  );
+                })
+            )}
           </svg>
         )}
       </div>

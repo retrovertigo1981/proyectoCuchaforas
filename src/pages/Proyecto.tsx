@@ -2,10 +2,13 @@ import { motion } from 'framer-motion';
 import cucharaMadera from '@/assets/img/cucharas-madera.png';
 import cucharaMadera2 from '@/assets/img/cucharas-madera-2.png';
 import artesanaCuchaforas from '@/assets/img/artesana-cuchaforas.png';
+import { Banner } from '@/components/Banner';
+import { Footer } from '@/components/Footer';
 
 export default function Proyecto() {
   return (
     <div className="min-h-screen bg-[#656293] ">
+      <Banner />
       <main className="pt-20 sm:pt-24">
         {/* Hero Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
@@ -13,8 +16,9 @@ export default function Proyecto() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6"
+            className="flex justify-center items-center gap-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6"
           >
+            <div className="w-9 h-9 bg-white rounded-full"></div>
             Proyecto
           </motion.h1>
           <motion.p
@@ -190,6 +194,7 @@ export default function Proyecto() {
           </section>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
