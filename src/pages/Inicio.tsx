@@ -91,7 +91,7 @@ const Inicio = () => {
       onload: () => {
         console.log('Audio cargado completamente');
       },
-      onloaderror: (id, error) => {
+      onloaderror: (error) => {
         console.error('Error cargando audio:', error);
       },
       onplay: () => {
