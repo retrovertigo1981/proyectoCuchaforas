@@ -24,7 +24,7 @@ const preloadAudioToCache = async (src: string) => {
 
 const Inicio = () => {
   const navigate = useNavigate();
-  const isMobile = useMobile(426);
+  const isMobile = useMobile(431);
   const welcomeSoundRef = useRef<Howl | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 

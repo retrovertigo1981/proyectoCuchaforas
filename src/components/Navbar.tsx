@@ -19,7 +19,7 @@ export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [socialOpen, setSocialOpen] = useState<boolean>(false);
   const location = useLocation();
-  const isMobile = useMobile(426);
+  const isMobile = useMobile(431);
   const textVariants = {
     initial: {
       opacity: 0,
