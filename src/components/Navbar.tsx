@@ -9,7 +9,7 @@ import logo from '@/assets/img/cuchaforas_logo_rojo.svg';
 const navigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
-  { name: 'Las Artesanas', href: '/artesanas' },
+  { name: 'Las Creadoras', href: '/creadoras' },
   { name: 'Proceso', href: '/proceso' },
   { name: 'Quiénes Somos', href: '/equipo' },
   { name: 'Contacto', href: '/contacto' },

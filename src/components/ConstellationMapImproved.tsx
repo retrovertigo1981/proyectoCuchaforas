@@ -206,6 +206,7 @@ export default function ConstellationMapImproved({
       // Limpiar timeout anterior si existe
       if (fadeTimeoutRef.current) {
         clearTimeout(fadeTimeoutRef.current);
+        fadeTimeoutRef.current = null;
       }
 
       // Si ya está sonando, hacer fade out rápido antes de reiniciar
@@ -223,7 +224,7 @@ export default function ConstellationMapImproved({
         hoverSoundRef.current.volume(0.5);
         hoverSoundRef.current.play();
       }
-      
+
       // Hacer fade out después de 2.5 segundos y detener después de 3 segundos
       fadeTimeoutRef.current = window.setTimeout(() => {
         if (hoverSoundRef.current && hoverSoundRef.current.playing()) {
@@ -235,6 +236,20 @@ export default function ConstellationMapImproved({
       }, 2500);
     }
   }, [initializeAudio]);
+
+  // Función para detener el sonido inmediatamente cuando sale del hover
+  const stopHoverSound = useCallback(() => {
+    if (hoverSoundRef.current) {
+      // Limpiar timeout de fade si existe
+      if (fadeTimeoutRef.current) {
+        clearTimeout(fadeTimeoutRef.current);
+        fadeTimeoutRef.current = null;
+      }
+
+      // Detener el sonido inmediatamente
+      hoverSoundRef.current.stop();
+    }
+  }, []);
 
   // Distribuir artesanas radialmente
   const worldArtesanas = useMemo(() => {
@@ -497,6 +512,7 @@ export default function ConstellationMapImproved({
               <motion.button
                 whileHover={{ scale: 1.3 }}
                 onMouseEnter={playHoverSound}
+                onMouseLeave={stopHoverSound}
                 onClick={() => handleArtesanaClick(artesana)}
                 className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
               >

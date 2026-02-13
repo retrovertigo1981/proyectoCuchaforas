@@ -74,7 +74,7 @@ export default function Artesanas() {
           <div className="flex items-center justify-center min-h-[90vh]">
             <div className="text-center">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
-              <p className="text-muted-foreground">Cargando artesanas...</p>
+              <p className="text-muted-foreground">Cargando creadoras...</p>
             </div>
           </div>
         )}
@@ -102,7 +102,7 @@ export default function Artesanas() {
         {!loading && !error && (
           <>
             {/* Header con filtros - SOLO visible en modo galería */}
-            <div className="border-b border-border bg-card/90 backdrop-blur-sm relative  top-16 sm:top-20 z-40">
+            <div className="border-b border-border bg-card/90 backdrop-blur-sm top-16 sm:top-20 z-40">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   {/* Toggles de vista */}
