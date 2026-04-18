@@ -15,7 +15,7 @@ const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
   if (region.includes('metropolitana') || region.includes('maule') ||
       region.includes('ñuble') || region.includes('biobío') ||
       region.includes('araucanía') || region.includes('centro')) {
-    return 'Centro';
+    return 'Central';
   }
 
   if (region.includes('los lagos') || region.includes('los ríos') ||
@@ -30,7 +30,7 @@ const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
 
 
   // Por defecto Centro si no se puede determinar
-  return 'Centro';
+  return 'Central';
 };
 
 

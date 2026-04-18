@@ -3,6 +3,7 @@ import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router';
+import { Suspense, lazy } from 'react';
 // import { Header } from '@/components/Header';
 // import { Footer } from '@/components/Footer';
 import Inicio from '@/pages/Inicio';
@@ -10,6 +11,7 @@ import Contacto from '@/pages/Contacto';
 import Proyecto from '@/pages/Proyecto';
 import Artesanas from '@/pages/Artesanas';
 import Equipo from '@/pages/Equipo';
+const ArtesanaDetailPage = lazy(() => import('@/pages/ArtesanaDetailPage'));
 // import Proceso from "./pages/Proceso";
 // import NotFound from "./pages/NotFound";
 
@@ -25,6 +27,7 @@ const App = () => (
         <Route path="/" element={<Inicio />} />
         <Route path="/proyecto" element={<Proyecto />} />
         <Route path="/creadoras" element={<Artesanas />} />
+        <Route path="/creadoras/:id" element={<Suspense fallback={<div>Cargando...</div>}><ArtesanaDetailPage /></Suspense>} />
         {/* <Route path="/proceso" element={<Proceso />} /> */}
         <Route path="/equipo" element={<Equipo />} />
         <Route path="/contacto" element={<Contacto />} />

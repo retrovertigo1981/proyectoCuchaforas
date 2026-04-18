@@ -5,11 +5,12 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { Howl } from 'howler';
-import { ArtesanaModal } from './ArtesanaModal';
 import type { Artesana as BasicArtesanaType } from '@/data/artesanas';
+import mapaTopografico from '@/assets/img/mapa_topografico_cuchaforas.svg';
 
 // IMPORTANTE: Este componente debe recibir las artesanas ya con su estructura base
 // La distribución radial se calcula internamente
@@ -147,9 +148,7 @@ export default function ConstellationMapImproved({
   selectedDisciplina,
   selectedRegion,
 }: ConstellationMapProps) {
-  const [selectedArtesana, setSelectedArtesana] = useState<Artesana | null>(
-    null
-  );
+  const navigate = useNavigate();
   const [viewState, setViewState] = useState<ViewState>({
     x: WORLD_DIMENSIONS.width / 2,
     y: WORLD_DIMENSIONS.height / 2,
@@ -448,40 +447,30 @@ export default function ConstellationMapImproved({
   const handleArtesanaClick = useCallback(
     (artesana: Artesana) => {
       if (!dragState.isDragging) {
-        setSelectedArtesana(artesana);
+        navigate(`/creadoras/${artesana.id}`);
       }
     },
-    [dragState.isDragging]
+    [dragState.isDragging, navigate]
   );
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-purple-600 via-purple-500 to-indigo-500">
-      {/* Fondo con estrellas */}
-      <div className="absolute inset-0 opacity-30">
-        <svg className="w-full h-full">
-          {Array.from({ length: 100 }).map((_, i) => (
-            <circle
-              key={i}
-              cx={`${Math.random() * 100}%`}
-              cy={`${Math.random() * 100}%`}
-              r={Math.random() * 2 + 0.5}
-              fill="white"
-              opacity={Math.random() * 0.5 + 0.3}
-            />
-          ))}
-        </svg>
-      </div>
+    <div className="relative w-full h-screen overflow-hidden bg-[#634b08]">
+      {/* Fondo del mapa topográfico */}
+      <img
+        src={mapaTopografico}
+        alt="Mapa Topográfico Cuchaforas"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+      />
 
       {/* Contenedor del mapa */}
       <div
         ref={containerRef}
-        className={`absolute inset-0 ${
-          isInitialized
-            ? dragState.isDragging
-              ? 'cursor-grabbing'
-              : 'cursor-grab'
-            : 'cursor-default'
-        }`}
+        className={`absolute inset-0 ${isInitialized
+          ? dragState.isDragging
+            ? 'cursor-grabbing'
+            : 'cursor-grab'
+          : 'cursor-default'
+          }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -552,8 +541,8 @@ export default function ConstellationMapImproved({
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0.2)" />
+                <stop offset="0%" stopColor="rgba(20,10,0,1)" />
+                <stop offset="100%" stopColor="rgba(40,20,5,0.9)" />
               </linearGradient>
             </defs>
             {/* Conectar todos los puntos que estén cerca entre sí */}
@@ -647,11 +636,6 @@ export default function ConstellationMapImproved({
         </motion.div>
       </div>
 
-      {/* Modal de artesana - Usando componente original */}
-      <ArtesanaModal
-        artesana={selectedArtesana}
-        onClose={() => setSelectedArtesana(null)}
-      />
     </div>
   );
 }

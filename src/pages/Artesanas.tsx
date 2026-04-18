@@ -1,11 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 import { Grid, Map, Network } from 'lucide-react';
 import ConstellationMapImproved from '@/components/ConstellationMapImproved';
-import { ArtesanaModal } from '@/components/ArtesanaModal';
 import { regiones } from '@/data/artesanas';
 import { useArtesanas } from '@/hooks/useArtesanas';
-import type { Artesana } from '@/data/artesanas';
 // import { Header } from '@/components/Header';
 import { Banner } from '@/components/Banner';
 import { Footer } from '@/components/Footer';
@@ -40,14 +39,12 @@ const getColorForArtesana = (artesanaId: string): string => {
 };
 
 export default function Artesanas() {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('constellation');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string | null>(
     null
   );
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedArtesana, setSelectedArtesana] = useState<Artesana | null>(
-    null
-  );
 
   // Usar el hook personalizado para manejo de datos
   const { artesanas, loading, error, disciplinas } = useArtesanas();
@@ -244,7 +241,7 @@ export default function Artesanas() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      onClick={() => setSelectedArtesana(artesana)}
+                      onClick={() => navigate(`/creadoras/${artesana.id}`)}
                       className="group cursor-pointer"
                     >
                       <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -296,13 +293,6 @@ export default function Artesanas() {
         )}
       </main>
 
-      {/* Modal - Usando componente original */}
-      {selectedArtesana && viewMode === 'gallery' && (
-        <ArtesanaModal
-          artesana={selectedArtesana}
-          onClose={() => setSelectedArtesana(null)}
-        />
-      )}
       <Footer />
     </div>
   );

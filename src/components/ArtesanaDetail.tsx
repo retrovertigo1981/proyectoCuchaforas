@@ -56,11 +56,11 @@ export const ArtesanaDetail = ({ artesanaId, onBack }: ArtesanaDetailProps) => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-md">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-card rounded-2xl shadow-2xl p-8 text-center"
+          className="bg-card rounded-2xl shadow-2xl p-8 text-center max-w-md mx-auto"
         >
           <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
           <p className="text-muted-foreground">Cargando información...</p>
@@ -71,11 +71,11 @@ export const ArtesanaDetail = ({ artesanaId, onBack }: ArtesanaDetailProps) => {
 
   if (error || !artesanaData) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-md">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-card rounded-2xl shadow-2xl p-8 text-center max-w-md"
+          className="bg-card rounded-2xl shadow-2xl p-8 text-center max-w-md mx-auto"
         >
           <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Star className="w-8 h-8 text-destructive" />
@@ -96,22 +96,14 @@ export const ArtesanaDetail = ({ artesanaId, onBack }: ArtesanaDetailProps) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-background/80 backdrop-blur-md"
-        onClick={onBack}
-      />
-
+    <div className="min-h-screen bg-background">
       {/* Content */}
-      <div className="relative min-h-screen flex items-center justify-center p-4 sm:p-6">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="relative w-full max-w-4xl bg-card rounded-2xl shadow-2xl texture-grain overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
+          className="bg-card rounded-2xl shadow-2xl texture-grain overflow-hidden"
         >
           {/* Header with back button */}
           <div className="sticky top-0 z-10 bg-card/95 backdrop-blur-sm border-b">

@@ -228,4 +228,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Kilo Code
+
+/.kilo
+
 # End of https://www.toptal.com/developers/gitignore/api/node,react,windows,macos,linux
