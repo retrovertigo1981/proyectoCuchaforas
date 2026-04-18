@@ -5,34 +5,46 @@ import type { ArtesanaApi } from '@/types/index';
 const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
   const region = apiRegion.toLowerCase();
 
-  if (region.includes('arica') || region.includes('tarapacá') ||
-      region.includes('antofagasta') || region.includes('atacama') ||
-      region.includes('coquimbo') || region.includes('valparaíso') ||
-      region.includes('norte')) {
+  if (
+    region.includes('arica') ||
+    region.includes('tarapacá') ||
+    region.includes('antofagasta') ||
+    region.includes('atacama') ||
+    region.includes('coquimbo') ||
+    region.includes('valparaíso') ||
+    region.includes('norte')
+  ) {
     return 'Norte';
   }
 
-  if (region.includes('metropolitana') || region.includes('maule') ||
-      region.includes('ñuble') || region.includes('biobío') ||
-      region.includes('araucanía') || region.includes('centro')) {
+  if (
+    region.includes('metropolitana') ||
+    region.includes('maule') ||
+    region.includes('ñuble') ||
+    region.includes('biobío') ||
+    region.includes('araucanía') ||
+    region.includes('centro')
+  ) {
     return 'Central';
   }
 
-  if (region.includes('los lagos') || region.includes('los ríos') ||
-      region.includes('aysén') || region.includes('magallanes') ||
-      region.includes('sur')) {
+  if (
+    region.includes('los lagos') ||
+    region.includes('los ríos') ||
+    region.includes('aysén') ||
+    region.includes('magallanes') ||
+    region.includes('sur')
+  ) {
     return 'Sur';
- }
+  }
 
- if(region.includes('internacional')) {
-  return 'Internacional';
- };
-
+  if (region.includes('internacional')) {
+    return 'Internacional';
+  }
 
   // Por defecto Centro si no se puede determinar
   return 'Central';
 };
-
 
 // Función para generar posición aleatoria en la constelación
 const generateRandomPosition = () => {
@@ -43,7 +55,9 @@ const generateRandomPosition = () => {
 };
 
 // Función principal para limpiar y transformar datos de la API
-export const transformArtesanaFromApi = (apiArtesana: ArtesanaApi): BasicArtesanaType => {
+export const transformArtesanaFromApi = (
+  apiArtesana: ArtesanaApi
+): BasicArtesanaType => {
   const acf = apiArtesana.acf;
 
   // Generar posición aleatoria para la constelación
@@ -68,9 +82,11 @@ export const transformArtesanaFromApi = (apiArtesana: ArtesanaApi): BasicArtesan
 };
 
 // Función para limpiar array de artesanas de la API
-export const transformArtesanasFromApi = (apiArtesanas: ArtesanaApi[]): BasicArtesanaType[] => {
+export const transformArtesanasFromApi = (
+  apiArtesanas: ArtesanaApi[]
+): BasicArtesanaType[] => {
   return apiArtesanas
-    .filter(artesana => artesana.acf && artesana.title.rendered)
+    .filter((artesana) => artesana.acf && artesana.title.rendered)
     .map(transformArtesanaFromApi);
 };
 
@@ -83,7 +99,9 @@ export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
     const perPage = 100; // Máximo permitido por WordPress
 
     while (true) {
-      const response = await fetch(`https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas?page=${page}&per_page=${perPage}`);
+      const response = await fetch(
+        `https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas?page=${page}&per_page=${perPage}`
+      );
 
       if (!response.ok) {
         if (response.status === 400 && page > 1) {
@@ -108,21 +126,23 @@ export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
 
     // Transformar los datos de la API al formato de la aplicación
     return transformArtesanasFromApi(allArtesanas);
-
   } catch (error) {
     console.error('Error fetching artesanas from API:', error);
 
-    // Fallback a datos estáticos en caso de error
-    console.warn('Falling back to static data due to API error');
-    const { artesanas } = await import('@/data/artesanas');
-    return artesanas;
+    // Fallback a array vacío en caso de error (los datos estáticos están comentados)
+    console.warn('API failed, returning empty array as fallback');
+    return [];
   }
 };
 
 // Función para obtener una artesana específica por ID desde la API
-export const fetchArtesanaByIdFromApi = async (id: string): Promise<BasicArtesanaType | null> => {
+export const fetchArtesanaByIdFromApi = async (
+  id: string
+): Promise<BasicArtesanaType | null> => {
   try {
-    const response = await fetch(`https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas/${id}`);
+    const response = await fetch(
+      `https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas/${id}`
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -131,7 +151,6 @@ export const fetchArtesanaByIdFromApi = async (id: string): Promise<BasicArtesan
     const apiArtesana: ArtesanaApi = await response.json();
 
     return transformArtesanaFromApi(apiArtesana);
-
   } catch (error) {
     console.error(`Error fetching artesana ${id} from API:`, error);
     return null;
@@ -141,7 +160,9 @@ export const fetchArtesanaByIdFromApi = async (id: string): Promise<BasicArtesan
 // Función para obtener datos completos de una artesana desde la API
 export const fetchCompleteArtesanaData = async (id: string) => {
   try {
-    const response = await fetch(`https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas/${id}`);
+    const response = await fetch(
+      `https://api.proyectocuchaforas.cl/wp-json/wp/v2/artesanas/${id}`
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -161,12 +182,10 @@ export const fetchCompleteArtesanaData = async (id: string) => {
       historia: acf.historia_y_vivencia,
       motivacion: acf.motivacion_participacion,
       imagenPerfil: acf.imagen_de_perfil,
-      imagenesTrabajo: [
-        acf.imagenes_trabajo_1,
-        acf.imagenes_trabajo_2,
-      ].filter(Boolean), // Filtrar valores undefined
+      imagenesTrabajo: [acf.imagenes_trabajo_1, acf.imagenes_trabajo_2].filter(
+        Boolean
+      ), // Filtrar valores undefined
     };
-
   } catch (error) {
     console.error(`Error fetching complete artesana data ${id}:`, error);
     return null;
@@ -174,7 +193,10 @@ export const fetchCompleteArtesanaData = async (id: string) => {
 };
 
 // Cache para mejorar performance
-const cache = new Map<string, { data: BasicArtesanaType[]; timestamp: number }>();
+const cache = new Map<
+  string,
+  { data: BasicArtesanaType[]; timestamp: number }
+>();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
 
 export const getCachedArtesanas = async (): Promise<BasicArtesanaType[]> => {
