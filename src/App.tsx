@@ -6,6 +6,7 @@ import { Suspense, lazy } from 'react';
 import Inicio from '@/pages/Inicio';
 
 const Proyecto = lazy(() => import('@/pages/Proyecto'));
+const Proceso = lazy(() => import('@/pages/Proceso'));
 const Artesanas = lazy(() => import('@/pages/Artesanas'));
 const ArtesanaDetailPage = lazy(() => import('@/pages/ArtesanaDetailPage'));
 const Equipo = lazy(() => import('@/pages/Equipo'));
@@ -36,6 +37,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/proyecto" element={<Suspense fallback={<LoadingFallback />}><Proyecto /></Suspense>} />
+        <Route path="/proceso" element={<Suspense fallback={<LoadingFallback />}><Proceso /></Suspense>} />
         <Route path="/creadoras" element={<Suspense fallback={<LoadingFallback />}><Artesanas /></Suspense>} />
         <Route path="/creadoras/:id" element={<Suspense fallback={<LoadingFallback />}><ArtesanaDetailPage /></Suspense>} />
         <Route path="/equipo" element={<Suspense fallback={<LoadingFallback />}><Equipo /></Suspense>} />

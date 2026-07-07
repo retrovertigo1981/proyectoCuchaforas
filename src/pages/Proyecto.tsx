@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer';
 
 export default function Proyecto() {
   return (
-    <div className="min-h-screen bg-[#656293] ">
+    <div className="min-h-screen bg-background">
       <Banner />
       <main id="main-content" className="pt-20 sm:pt-24">
         {/* Hero Section */}
@@ -16,16 +16,16 @@ export default function Proyecto() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex justify-center items-center gap-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6"
+            className="flex justify-center items-center gap-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6"
           >
-            <div className="w-9 h-9 bg-white rounded-full"></div>
+            <div className="w-9 h-9 bg-foreground rounded-full"></div>
             Proyecto
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-white max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-foreground max-w-3xl mx-auto"
           >
             Cucháforas: objetos poéticos de artesanía para la resistencia & la
             crianza.
@@ -41,10 +41,10 @@ export default function Proyecto() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
-              className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center"
+                className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start"
             >
               <div className="order-2 md:order-1">
-                <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed italic">
+                <div className="space-y-4 text-base sm:text-lg text-foreground leading-relaxed italic">
                   <p>
                     “Este proyecto emerge –sin saberlo– el mismo día en que mi
                     hijo nació, hace dos años. Y se cristaliza hoy, cuando puedo
@@ -88,7 +88,7 @@ export default function Proyecto() {
               transition={{ duration: 0.8 }}
               className="container mx-auto px-4 sm:px-6 lg:px-8"
             >
-              <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
+              <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
                 <div className="rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20">
                   <img
                     src={artesanaCuchaforas}
@@ -98,7 +98,7 @@ export default function Proyecto() {
                 </div>
 
                 <div>
-                  <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed">
+                  <div className="space-y-4 text-base sm:text-lg text-foreground leading-relaxed">
                     <p>
                       Este proyecto se soñó siempre como un regalo, porque
                       queríamos/queremos y buscamos, visibilizar a distintas
@@ -124,10 +124,10 @@ export default function Proyecto() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
-              className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center"
+                className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start"
             >
               <div className="order-2 md:order-1">
-                <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed italic">
+                <div className="space-y-4 text-base sm:text-lg text-foreground leading-relaxed italic">
                   <p>
                     ¿Cómo podemos las mujeres artesanas crear en las etapas de
                     crianza? ¿Cómo podemos crear en medio de la desigualdad
@@ -158,7 +158,7 @@ export default function Proyecto() {
               transition={{ duration: 0.8 }}
               className="mt-12"
             >
-              <div className="space-y-4 text-base sm:text-lg text-white leading-relaxed text-justify">
+              <div className="space-y-4 text-base sm:text-lg text-foreground leading-relaxed">
                 <p>
                   Explorando el cómo compatibilizar el estado creativo con el
                   estado criando, llegamos a la necesidad de regalar un objeto

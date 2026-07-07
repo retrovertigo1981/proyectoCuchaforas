@@ -6,6 +6,7 @@ import logoMCAP from '@/assets/img/23_MCAP_RGB-03.png';
 const footerNavigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
+  { name: 'El Proceso', href: '/proceso' },
   { name: 'Las Creadoras', href: '/creadoras' },
   { name: 'Quiénes Somos', href: '/equipo' },
   { name: 'Contacto', href: '/contacto' },

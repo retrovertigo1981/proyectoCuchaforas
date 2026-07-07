@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, Share2, X, Instagram } from 'lucide-react';
@@ -9,16 +9,25 @@ import logo from '@/assets/img/cuchaforas_logo_rojo.svg';
 const navigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
+  { name: 'El Proceso', href: '/proceso' },
   { name: 'Las Creadoras', href: '/creadoras' },
   { name: 'Quiénes Somos', href: '/equipo' },
   { name: 'Contacto', href: '/contacto' },
 ];
 
-export const Navbar = () => {
+interface NavbarProps {
+  onMenuStateChange?: (isOpen: boolean) => void;
+}
+
+export const Navbar = ({ onMenuStateChange }: NavbarProps = {}) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [socialOpen, setSocialOpen] = useState<boolean>(false);
   const location = useLocation();
   const isMobile = useMobile(431);
+
+  useEffect(() => {
+    onMenuStateChange?.(menuOpen || socialOpen);
+  }, [menuOpen, socialOpen, onMenuStateChange]);
   const textVariants = {
     initial: {
       opacity: 0,

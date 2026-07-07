@@ -16,6 +16,7 @@ const Inicio = () => {
   const welcomeSoundRef = useRef<Howl | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioLoaded, setAudioLoaded] = useState(false);
+  const [anyMenuOpen, setAnyMenuOpen] = useState(false);
 
   const hasInteractedRef = useRef(
     typeof window !== 'undefined' &&
@@ -104,10 +105,10 @@ const Inicio = () => {
         }}
         className="h-full w-full object-cover brightness-[0.6]"
       />
-      <Navbar />
+      <Navbar onMenuStateChange={setAnyMenuOpen} />
 
       <motion.button
-        className={`absolute flex items-center ${isMobile ? 'top-36 right-8' : 'top-[150px] right-10'} z-40`}
+        className={`absolute flex items-center ${anyMenuOpen ? 'hidden' : ''} ${isMobile ? 'top-36 right-8' : 'top-[150px] right-10'} z-40`}
         initial="initial"
         whileHover="hover"
         onClick={toggleAudio}
