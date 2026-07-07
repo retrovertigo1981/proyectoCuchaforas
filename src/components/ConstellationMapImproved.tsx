@@ -5,6 +5,7 @@ import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { Howl } from 'howler';
 import type { Artesana as BasicArtesanaType } from '@/data/artesanas';
 import mapaTopografico from '@/assets/img/mapa_topografico_cuchaforas.svg';
+import { getColorForArtesana } from '@/utils/colors';
 
 interface Artesana extends BasicArtesanaType {
   x: number;
@@ -29,19 +30,6 @@ const ZOOM_LEVELS = { min: 0.3, max: 2.5, step: 0.2 };
 const POINT_RADIUS = 8;
 const HIT_RADIUS = 20;
 const CONNECTION_DISTANCE = 600;
-
-const COLOR_PALETTE = [
-  '#7e7bab', '#ffd633', '#9695c3', '#656293', '#bab8dd', '#feca17',
-  '#b28710', '#d9a906', '#ef7b6f', '#e7312b', '#cb281a', '#ea5a4c',
-];
-
-const getColorForArtesana = (artesanaId: string): string => {
-  let hash = 0;
-  for (let i = 0; i < artesanaId.length; i++) {
-    hash = artesanaId.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return COLOR_PALETTE[Math.abs(hash) % COLOR_PALETTE.length];
-};
 
 const distributeRadially = (artesanas: BasicArtesanaType[]): Artesana[] => {
   const centerX = WORLD_DIMENSIONS.width / 2;

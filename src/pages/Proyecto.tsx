@@ -9,7 +9,7 @@ export default function Proyecto() {
   return (
     <div className="min-h-screen bg-[#656293] ">
       <Banner />
-      <main className="pt-20 sm:pt-24">
+      <main id="main-content" className="pt-20 sm:pt-24">
         {/* Hero Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
           <motion.h1

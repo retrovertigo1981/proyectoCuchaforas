@@ -5,38 +5,11 @@ import { Grid, Map, Network } from 'lucide-react';
 import ConstellationMapImproved from '@/components/ConstellationMapImproved';
 import { regiones } from '@/data/artesanas';
 import { useArtesanas } from '@/hooks/useArtesanas';
-// import { Header } from '@/components/Header';
 import { Banner } from '@/components/Banner';
 import { Footer } from '@/components/Footer';
+import { getColorForArtesana } from '@/utils/colors';
 
 type ViewMode = 'constellation' | 'gallery';
-
-// Paleta de colores proporcionada (en hexadecimal) - misma que en ConstellationMapImproved
-const COLOR_PALETTE = [
-  '#7e7bab',
-  '#ffd633',
-  '#9695c3',
-  '#656293',
-  '#bab8dd',
-  '#feca17',
-  '#b28710',
-  '#d9a906',
-  '#ef7b6f',
-  '#e7312b',
-  '#cb281a',
-  '#ea5a4c',
-];
-
-// Función para obtener un color consistente basado en el ID de la artesana
-// Esto asegura que cada artesana siempre tenga el mismo color
-const getColorForArtesana = (artesanaId: string): string => {
-  let hash = 0;
-  for (let i = 0; i < artesanaId.length; i++) {
-    hash = artesanaId.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const index = Math.abs(hash) % COLOR_PALETTE.length;
-  return COLOR_PALETTE[index];
-};
 
 export default function Artesanas() {
   const navigate = useNavigate();
@@ -65,7 +38,7 @@ export default function Artesanas() {
   return (
     <div className="min-h-screen bg-background">
       <Banner />
-      <main className="min-h-screen">
+      <main id="main-content" className="min-h-screen">
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center min-h-[90vh]">

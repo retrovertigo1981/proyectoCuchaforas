@@ -6,8 +6,7 @@ import logoMCAP from '@/assets/img/23_MCAP_RGB-03.png';
 const footerNavigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
-  { name: 'Las Artesanas', href: '/artesanas' },
-  { name: 'Proceso', href: '/proceso' },
+  { name: 'Las Creadoras', href: '/creadoras' },
   { name: 'Quiénes Somos', href: '/equipo' },
   { name: 'Contacto', href: '/contacto' },
 ];
@@ -121,20 +120,6 @@ export const Footer = () => {
             © {new Date().getFullYear()} Cuchaforas. Todos los derechos
             reservados.
           </p>
-          <div className="flex items-center gap-6">
-            <Link
-              to="/privacidad"
-              className="text-white hover:text-black transition-colors duration-200"
-            >
-              Privacidad
-            </Link>
-            <Link
-              to="/terminos"
-              className="text-white hover:text-black transition-colors duration-200"
-            >
-              Términos
-            </Link>
-          </div>
         </motion.div>
       </div>
     </footer>

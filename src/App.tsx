@@ -10,6 +10,7 @@ const Artesanas = lazy(() => import('@/pages/Artesanas'));
 const ArtesanaDetailPage = lazy(() => import('@/pages/ArtesanaDetailPage'));
 const Equipo = lazy(() => import('@/pages/Equipo'));
 const Contacto = lazy(() => import('@/pages/Contacto'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -26,6 +27,12 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Sonner />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:outline-none"
+      >
+        Saltar al contenido principal
+      </a>
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/proyecto" element={<Suspense fallback={<LoadingFallback />}><Proyecto /></Suspense>} />
@@ -33,6 +40,7 @@ const App = () => (
         <Route path="/creadoras/:id" element={<Suspense fallback={<LoadingFallback />}><ArtesanaDetailPage /></Suspense>} />
         <Route path="/equipo" element={<Suspense fallback={<LoadingFallback />}><Equipo /></Suspense>} />
         <Route path="/contacto" element={<Suspense fallback={<LoadingFallback />}><Contacto /></Suspense>} />
+        <Route path="*" element={<Suspense fallback={<LoadingFallback />}><NotFound /></Suspense>} />
       </Routes>
     </TooltipProvider>
   </QueryClientProvider>

@@ -90,7 +90,7 @@ const Inicio = () => {
   }, [initAudio]);
 
   return (
-    <div className="h-screen bg-background overflow-hidden">
+    <div id="main-content" className="h-screen bg-background overflow-hidden">
       <motion.img
         src={artesana1}
         alt="Artesana Background"

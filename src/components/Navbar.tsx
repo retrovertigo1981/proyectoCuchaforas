@@ -10,7 +10,6 @@ const navigation = [
   { name: 'Inicio', href: '/' },
   { name: 'El Proyecto', href: '/proyecto' },
   { name: 'Las Creadoras', href: '/creadoras' },
-  { name: 'Proceso', href: '/proceso' },
   { name: 'Quiénes Somos', href: '/equipo' },
   { name: 'Contacto', href: '/contacto' },
 ];
