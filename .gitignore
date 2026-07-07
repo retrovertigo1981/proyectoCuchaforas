@@ -235,4 +235,14 @@ $RECYCLE.BIN/
 # Bundle analyzer
 stats.html
 
+# Lighthouse CI
+.lighthouseci/
+lhci_reports/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,react,windows,macos,linux
