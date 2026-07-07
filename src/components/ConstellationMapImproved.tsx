@@ -308,6 +308,26 @@ export default function ConstellationMapImproved({
     });
   }, [filteredArtesanas, worldToScreen]);
 
+  // Virtualización: solo renderizar puntos visibles en viewport + buffer
+  const visibleArtesanas = useMemo(() => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return screenArtesanas;
+
+    const buffer = 100;
+    const minX = -buffer;
+    const maxX = rect.width + buffer;
+    const minY = -buffer;
+    const maxY = rect.height + buffer;
+
+    return screenArtesanas.filter(
+      (a) =>
+        a.screenX >= minX &&
+        a.screenX <= maxX &&
+        a.screenY >= minY &&
+        a.screenY <= maxY
+    );
+  }, [screenArtesanas]);
+
   // Handlers de drag
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -481,7 +501,7 @@ export default function ConstellationMapImproved({
       >
         {/* Puntos de artesanas */}
         <AnimatePresence>
-          {screenArtesanas.map((artesana, index) => (
+          {visibleArtesanas.map((artesana, index) => (
             <motion.div
               key={artesana.id}
               initial={{ opacity: 0, scale: 0 }}
@@ -505,11 +525,9 @@ export default function ConstellationMapImproved({
                 onClick={() => handleArtesanaClick(artesana)}
                 className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
               >
-                {/* Anillo pulsante */}
                 <div className="absolute inset-0 -m-6 rounded-full border-2 border-white/60 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-ping" />
                 <div className="absolute inset-0 -m-3 rounded-full border border-white/80 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:animate-pulse" />
 
-                {/* Punto principal con color de la paleta */}
                 <div
                   className="relative w-4 h-4 rounded-full shadow-lg"
                   style={{
@@ -518,7 +536,6 @@ export default function ConstellationMapImproved({
                   }}
                 />
 
-                {/* Tooltip */}
                 <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <div className="font-semibold">{artesana.nombre}</div>
                   <div className="text-xs text-gray-300">
@@ -530,8 +547,8 @@ export default function ConstellationMapImproved({
           ))}
         </AnimatePresence>
 
-        {/* Líneas de conexión - conectar puntos cercanos en el espacio */}
-        {filteredArtesanas.length > 1 && (
+        {/* Líneas de conexión - solo entre puntos visibles */}
+        {visibleArtesanas.length > 1 && (
           <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
             <defs>
               <linearGradient
@@ -545,33 +562,28 @@ export default function ConstellationMapImproved({
                 <stop offset="100%" stopColor="rgba(40,20,5,0.9)" />
               </linearGradient>
             </defs>
-            {/* Conectar todos los puntos que estén cerca entre sí */}
-            {filteredArtesanas.flatMap((artesana, i) =>
-              filteredArtesanas
+            {visibleArtesanas.flatMap((artesana, i) =>
+              visibleArtesanas
                 .slice(i + 1)
                 .filter((other) => {
                   const dx = artesana.x - other.x;
                   const dy = artesana.y - other.y;
                   const distance = Math.sqrt(dx * dx + dy * dy);
-                  return distance < 600; // Umbral aumentado para conectar más puntos
+                  return distance < 600;
                 })
-                .map((other, j) => {
-                  const screenPos1 = worldToScreen(artesana.x, artesana.y);
-                  const screenPos2 = worldToScreen(other.x, other.y);
-                  return (
-                    <line
-                      key={`line-${i}-${j}`}
-                      x1={screenPos1.x}
-                      y1={screenPos1.y}
-                      x2={screenPos2.x}
-                      y2={screenPos2.y}
-                      stroke="url(#lineGradient)"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeOpacity="0.4"
-                    />
-                  );
-                })
+                .map((other) => (
+                  <line
+                    key={`line-${artesana.id}-${other.id}`}
+                    x1={artesana.screenX}
+                    y1={artesana.screenY}
+                    x2={other.screenX}
+                    y2={other.screenY}
+                    stroke="url(#lineGradient)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeOpacity="0.4"
+                  />
+                ))
             )}
           </svg>
         )}

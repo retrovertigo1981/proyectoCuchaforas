@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:analyze": "ANALYZE=true vite build",
+    "optimize:images": "node scripts/optimize-images.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "preview": "vite preview"
@@ -41,6 +43,8 @@
     "postcss": "^8.4.35",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^7.0.1",
+    "sharp": "^0.35.3",
+    "svgo": "^4.0.1",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.8.3",

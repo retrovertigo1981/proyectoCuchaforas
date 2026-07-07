@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { Howl } from 'howler';
 import { Volume2, VolumeX } from 'lucide-react';
 import { Navbar } from '@/components/Navbar';
@@ -10,31 +10,18 @@ import cuchafora from '@/assets/img/cuchaforas_logo_negro - copia.png';
 
 const AUDIO_SRC = '/sonidos/Voz_cuchaforas.mp3';
 
-// Función para precargar el audio en caché del navegador
-const preloadAudioToCache = async (src: string) => {
-  try {
-    const response = await fetch(src, { mode: 'no-cors' });
-    if (response.ok) {
-      console.log('Audio pre-cargado en caché');
-    }
-  } catch (error) {
-    console.log('Precarga en caché no disponible:', error);
-  }
-};
-
 const Inicio = () => {
   const navigate = useNavigate();
   const isMobile = useMobile(431);
   const welcomeSoundRef = useRef<Howl | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioLoaded, setAudioLoaded] = useState(false);
 
-  // Usar sessionStorage para persistir solo durante la sesión del navegador
   const hasInteractedRef = useRef(
     typeof window !== 'undefined' &&
       sessionStorage.getItem('audio_interacted') === 'true'
   );
 
-  // Variantes de animación para iconos (mismo estilo que Navbar)
   const iconTextVariants = {
     initial: {
       opacity: 0,
@@ -57,11 +44,39 @@ const Inicio = () => {
     },
   } as const;
 
-  // Función para alternar audio
+  const initAudio = useCallback(() => {
+    if (welcomeSoundRef.current) return;
+
+    welcomeSoundRef.current = new Howl({
+      src: [AUDIO_SRC],
+      volume: 0.5,
+      preload: true,
+      html5: true,
+      autoplay: false,
+      loop: true,
+      onload: () => {
+        setAudioLoaded(true);
+      },
+      onloaderror: (_id, error) => {
+        console.error('Error cargando audio:', error);
+      },
+      onplay: () => {
+        setIsPlaying(true);
+      },
+      onpause: () => {
+        setIsPlaying(false);
+      },
+      onend: () => {
+        setIsPlaying(false);
+      },
+    });
+  }, []);
+
   const toggleAudio = useCallback(() => {
+    initAudio();
+
     if (!welcomeSoundRef.current) return;
 
-    // Marcar que el usuario ha interactuado con el audio y persistir en sessionStorage
     hasInteractedRef.current = true;
     sessionStorage.setItem('audio_interacted', 'true');
 
@@ -72,95 +87,7 @@ const Inicio = () => {
       welcomeSoundRef.current.play();
       setIsPlaying(true);
     }
-  }, []);
-
-  useEffect(() => {
-    console.log('🎵 [Inicio] useEffect ejecutado - componente montado');
-
-    // Precargar en caché inmediatamente
-    preloadAudioToCache(AUDIO_SRC);
-
-    // Configuración con streaming (html5: true) para reproducción inmediata
-    welcomeSoundRef.current = new Howl({
-      src: [AUDIO_SRC],
-      volume: 0.5,
-      preload: true,
-      html5: true, // ← Habilita streaming - reproduce mientras descarga
-      autoplay: false, // ← Cambiado a false, controlamos manualmente
-      loop: true,
-      onload: () => {
-        console.log('Audio cargado completamente');
-      },
-      onloaderror: (error) => {
-        console.error('Error cargando audio:', error);
-      },
-      onplay: () => {
-        console.log('Reproducción iniciada');
-        setIsPlaying(true);
-      },
-      onpause: () => {
-        console.log('Reproducción pausada');
-        setIsPlaying(false);
-      },
-      onend: () => {
-        console.log('Reproducción finalizada');
-        setIsPlaying(false);
-      },
-    });
-
-    // Verificar estado REAL del audio al montar
-    const checkActualState = () => {
-      if (welcomeSoundRef.current) {
-        const actuallyPlaying = welcomeSoundRef.current.playing();
-        console.log(
-          '🎵 [Inicio] Estado real del audio al montar:',
-          actuallyPlaying
-        );
-        // Solo actualizamos isPlaying si NO ha interactuado, para no sobrescribir su elección
-        if (!hasInteractedRef.current) {
-          setIsPlaying(actuallyPlaying);
-        }
-      }
-    };
-
-    // Solo intentar reproducir en la PRIMERA VISITA (si no ha interactuado)
-    const tryPlay = () => {
-      if (
-        welcomeSoundRef.current &&
-        !welcomeSoundRef.current.playing() &&
-        !hasInteractedRef.current
-      ) {
-        console.log(
-          '🎵 [Inicio] Primera visita - intentando reproducir audio...'
-        );
-        welcomeSoundRef.current.play();
-      } else if (hasInteractedRef.current) {
-        console.log('🎵 [Inicio] Usuario ya interactuó - NO auto-reproducir');
-      }
-    };
-
-    // PRIMERA CARGA: Intentar reproducir inmediatamente
-    tryPlay();
-
-    // Retry con delay por si el primer intento falla por autoplay policy
-    const timeoutId = setTimeout(() => {
-      console.log('🎵 [Inicio] Retry de reproducción...');
-      tryPlay();
-    }, 100);
-
-    // Escuchar cuando el audio esté listo para reproducir
-    welcomeSoundRef.current.once('load', () => {
-      console.log('🎵 [Inicio] Audio listo, verificando estado...');
-      checkActualState();
-      tryPlay();
-    });
-
-    return () => {
-      console.log('🎵 [Inicio] Cleanup - desmontando componente');
-      clearTimeout(timeoutId);
-      welcomeSoundRef.current?.unload();
-    };
-  }, []);
+  }, [initAudio]);
 
   return (
     <div className="h-screen bg-background overflow-hidden">
@@ -179,7 +106,6 @@ const Inicio = () => {
       />
       <Navbar />
 
-      {/* Control de Volumen - Debajo de los iconos del Navbar */}
       <motion.button
         className={`absolute flex items-center ${isMobile ? 'top-36 right-8' : 'top-[150px] right-10'} z-40`}
         initial="initial"
@@ -190,7 +116,7 @@ const Inicio = () => {
           variants={iconTextVariants}
           className="text-white pr-2 pointer-events-none absolute right-8 whitespace-nowrap"
         >
-          {isPlaying ? 'Silenciar' : 'Activar Audio'}
+          {isPlaying ? 'Silenciar' : audioLoaded ? 'Activar Audio' : 'Cargar Audio'}
         </motion.span>
         <motion.div variants={iconVariants}>
           {isPlaying ? <Volume2 size={30} /> : <VolumeX size={30} />}
@@ -204,8 +130,6 @@ const Inicio = () => {
           className={`${isMobile ? 'w-80' : 'w-1/3'}  mx-auto mb-14 mt-[-10px]`}
         />
 
-        {/* md:w-1/3 */}
-
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -215,11 +139,8 @@ const Inicio = () => {
           onClick={() => navigate('/creadoras')}
           className="relative group mx-auto"
         >
-          {/* Button */}
           <div className="relative flex items-center gap-3 px-8 py-4 w-44 h-44 text-background rounded-full font-display font-bold text-lg shadow-2xl border-2 border-brand-mustard-light hover:bg-brand-mustard-light transition-colors">
-            {/* <Sparkles className="w-5 h-5" /> */}
             <span>Explorar la Cartografía</span>
-            {/* <Sparkles className="w-5 h-5" /> */}
           </div>
         </motion.button>
       </div>

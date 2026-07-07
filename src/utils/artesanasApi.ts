@@ -1,7 +1,6 @@
 import type { Artesana as BasicArtesanaType } from '@/data/artesanas';
 import type { ArtesanaApi } from '@/types/index';
 
-// Mapeo de regiones de la API a regiones de la aplicación
 const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
   const region = apiRegion.toLowerCase();
 
@@ -42,11 +41,9 @@ const mapRegionFromApi = (apiRegion: string): BasicArtesanaType['region'] => {
     return 'Internacional';
   }
 
-  // Por defecto Centro si no se puede determinar
   return 'Central';
 };
 
-// Función para generar posición aleatoria en la constelación
 const generateRandomPosition = () => {
   return {
     x: Math.random() * 100,
@@ -54,20 +51,17 @@ const generateRandomPosition = () => {
   };
 };
 
-// Función principal para limpiar y transformar datos de la API
 export const transformArtesanaFromApi = (
   apiArtesana: ArtesanaApi
 ): BasicArtesanaType => {
   const acf = apiArtesana.acf;
 
-  // Generar posición aleatoria para la constelación
   const posicion = generateRandomPosition();
 
-  // Procesar imágenes de trabajo (opcional)
   const imagenesTrabajo = [
     acf.imagenes_trabajo_1,
     acf.imagenes_trabajo_2,
-  ].filter(Boolean) as string[]; // Filtrar valores undefined
+  ].filter(Boolean) as string[];
 
   return {
     id: apiArtesana.id.toString(),
@@ -81,7 +75,6 @@ export const transformArtesanaFromApi = (
   };
 };
 
-// Función para limpiar array de artesanas de la API
 export const transformArtesanasFromApi = (
   apiArtesanas: ArtesanaApi[]
 ): BasicArtesanaType[] => {
@@ -90,13 +83,11 @@ export const transformArtesanasFromApi = (
     .map(transformArtesanaFromApi);
 };
 
-// Función para obtener artesanas desde la API con manejo de errores
 export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
   try {
-    // Obtener todas las artesanas usando paginación
     const allArtesanas: ArtesanaApi[] = [];
     let page = 1;
-    const perPage = 100; // Máximo permitido por WordPress
+    const perPage = 100;
 
     while (true) {
       const response = await fetch(
@@ -105,7 +96,6 @@ export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
 
       if (!response.ok) {
         if (response.status === 400 && page > 1) {
-          // No hay más páginas
           break;
         }
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -120,22 +110,16 @@ export const fetchArtesanasFromApi = async (): Promise<BasicArtesanaType[]> => {
       allArtesanas.push(...apiArtesanas);
       page++;
 
-      // Seguridad: evitar bucles infinitos
       if (page > 10) break;
     }
 
-    // Transformar los datos de la API al formato de la aplicación
     return transformArtesanasFromApi(allArtesanas);
   } catch (error) {
     console.error('Error fetching artesanas from API:', error);
-
-    // Fallback a array vacío en caso de error (los datos estáticos están comentados)
-    console.warn('API failed, returning empty array as fallback');
     return [];
   }
 };
 
-// Función para obtener una artesana específica por ID desde la API
 export const fetchArtesanaByIdFromApi = async (
   id: string
 ): Promise<BasicArtesanaType | null> => {
@@ -157,7 +141,6 @@ export const fetchArtesanaByIdFromApi = async (
   }
 };
 
-// Función para obtener datos completos de una artesana desde la API
 export const fetchCompleteArtesanaData = async (id: string) => {
   try {
     const response = await fetch(
@@ -184,35 +167,10 @@ export const fetchCompleteArtesanaData = async (id: string) => {
       imagenPerfil: acf.imagen_de_perfil,
       imagenesTrabajo: [acf.imagenes_trabajo_1, acf.imagenes_trabajo_2].filter(
         Boolean
-      ), // Filtrar valores undefined
+      ),
     };
   } catch (error) {
     console.error(`Error fetching complete artesana data ${id}:`, error);
     return null;
   }
-};
-
-// Cache para mejorar performance
-const cache = new Map<
-  string,
-  { data: BasicArtesanaType[]; timestamp: number }
->();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
-
-export const getCachedArtesanas = async (): Promise<BasicArtesanaType[]> => {
-  const cached = cache.get('artesanas');
-
-  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-    return cached.data;
-  }
-
-  const artesanas = await fetchArtesanasFromApi();
-  cache.set('artesanas', { data: artesanas, timestamp: Date.now() });
-
-  return artesanas;
-};
-
-// Función para limpiar cache (útil para desarrollo)
-export const clearArtesanasCache = () => {
-  cache.delete('artesanas');
 };

@@ -232,4 +232,7 @@ $RECYCLE.BIN/
 
 /.kilo
 
+# Bundle analyzer
+stats.html
+
 # End of https://www.toptal.com/developers/gitignore/api/node,react,windows,macos,linux
