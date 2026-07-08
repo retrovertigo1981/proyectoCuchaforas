@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router';
 import { Suspense, lazy } from 'react';
 import Inicio from '@/pages/Inicio';
+import { LoadingScreen } from '@/components/LoadingScreen';
 
 const Proyecto = lazy(() => import('@/pages/Proyecto'));
 const Proceso = lazy(() => import('@/pages/Proceso'));
@@ -27,6 +28,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <LoadingScreen />
       <Sonner />
       <a
         href="#main-content"
