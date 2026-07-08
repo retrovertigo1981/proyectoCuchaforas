@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { Howl } from 'howler';
 import { Volume2, VolumeX } from 'lucide-react';
 import { Navbar } from '@/components/Navbar';
@@ -89,6 +89,15 @@ const Inicio = () => {
       setIsPlaying(true);
     }
   }, [initAudio]);
+
+  useEffect(() => {
+    return () => {
+      if (welcomeSoundRef.current) {
+        welcomeSoundRef.current.pause();
+        welcomeSoundRef.current.unload();
+      }
+    };
+  }, []);
 
   return (
     <div id="main-content" className="h-screen bg-background overflow-hidden">
