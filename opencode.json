@@ -1,0 +1,49 @@
+{
+        "$schema": "https://opencode.ai/config.json",
+        "agent": {
+                "build": {
+                        "model": "opencode-go/kimi-k2.7-code",
+                        "mode": "primary",
+                        "description": "Implementa funciones TypeScript en /src/core/ según specs aprobadas",
+                        "prompt": "Eres un desarrollador senior trabajando en AuraTOM. Implementas funciones TypeScript puras en /src/core/ siguiendo las specs en /specs/. Reglas: sin 'any', sin side effects, lógica agnóstica de framework. Lee siempre CLAUDE.md antes de generar. Después del código, máximo 2 párrafos explicando decisiones no obvias.",
+                        "temperature": 0.2,
+                        "permission": {
+                                "edit": "allow",
+                                "bash": "allow"
+                        }
+                },
+                "plan": {
+                        "model": "opencode-go/deepseek-v4-pro",
+                        "mode": "primary",
+                        "description": "Analiza specs y planifica sin escribir código",
+                        "prompt": "Eres un arquitecto de software trabajando en AuraTOM. Analizas specs, identificas edge cases, propones interfaces TypeScript y planificas la implementación. NUNCA generas archivos completos. Máximo 20 líneas de análisis.",
+                        "temperature": 0.1,
+                        "permission": {
+                                "edit": "deny",
+                                "bash": "deny"
+                        }
+                },
+                "test": {
+                        "model": "opencode-go/qwen3.7-plus",
+                        "mode": "subagent",
+                        "description": "Escribe tests unitarios Vitest para /src/core/ siguiendo los casos de /specs/",
+                        "prompt": "Eres un QA engineer trabajando en AuraTOM. Escribes tests con Vitest para funciones puras en /src/core/. Sigues exactamente los casos documentados en /specs/. Nombres de tests en español. Sin mocks innecesarios.",
+                        "temperature": 0.1,
+                        "permission": {
+                                "edit": "allow",
+                                "bash": "deny"
+                        }
+                },
+                "review": {
+                        "model": "opencode-go/deepseek-v4-flash",
+                        "mode": "subagent",
+                        "description": "Revisa código del usuario y lista errores sin reescribir",
+                        "prompt": "Eres un code reviewer. El usuario te manda su código. Respondes con lista numerada: archivo, línea, problema, sugerencia de fix en 1 línea. NO reescribas archivos. Si no hay errores, di: 'Sin errores. Puedes correr los tests'.",
+                        "temperature": 0.0,
+                        "permission": {
+                                "edit": "deny",
+                                "bash": "deny"
+                        }
+                }
+        }
+}

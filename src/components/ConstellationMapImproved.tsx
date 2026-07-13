@@ -327,7 +327,9 @@ export default function ConstellationMapImproved({
         hasMoved: false,
       };
 
-      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+      if (e.pointerType !== 'touch') {
+        (e.target as HTMLElement).setPointerCapture(e.pointerId);
+      }
     },
     [viewState, initializeAudio]
   );
@@ -400,6 +402,7 @@ export default function ConstellationMapImproved({
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (e.touches.length === 2) {
+        dragRef.current.isDragging = false;
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
         pinchRef.current = {
@@ -416,23 +419,61 @@ export default function ConstellationMapImproved({
     (e: React.TouchEvent) => {
       if (e.touches.length === 2 && pinchRef.current.isPinching) {
         e.preventDefault();
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return;
+
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         const scaleRatio = distance / pinchRef.current.startDistance;
-        const newScale = Math.max(
-          ZOOM_LEVELS.min,
-          Math.min(ZOOM_LEVELS.max, pinchRef.current.startScale * scaleRatio)
-        );
-        setViewState((prev) => ({ ...prev, scale: newScale }));
+        
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        
+        setViewState((prev) => {
+          const worldPoint = {
+            x: midX / prev.scale + prev.x,
+            y: midY / prev.scale + prev.y,
+          };
+          
+          const newScale = Math.max(
+            ZOOM_LEVELS.min,
+            Math.min(ZOOM_LEVELS.max, pinchRef.current.startScale * scaleRatio)
+          );
+          
+          return {
+            scale: newScale,
+            x: worldPoint.x - midX / newScale,
+            y: worldPoint.y - midY / newScale,
+          };
+        });
       }
     },
     []
   );
 
-  const handleTouchEnd = useCallback(() => {
-    pinchRef.current.isPinching = false;
-  }, []);
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (pinchRef.current.isPinching) {
+        pinchRef.current.isPinching = false;
+        
+        if (e.touches.length === 1) {
+          const rect = containerRef.current?.getBoundingClientRect();
+          if (!rect) return;
+          
+          dragRef.current = {
+            isDragging: true,
+            startX: e.touches[0].clientX,
+            startY: e.touches[0].clientY,
+            startViewX: viewState.x,
+            startViewY: viewState.y,
+            hasMoved: false,
+          };
+        }
+      }
+    },
+    [viewState.x, viewState.y]
+  );
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
@@ -505,7 +546,7 @@ export default function ConstellationMapImproved({
 
       <div
         ref={containerRef}
-        className={`absolute inset-0 ${isInitialized ? (dragRef.current.isDragging ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-default'}`}
+        className={`absolute inset-0 touch-none ${isInitialized ? (dragRef.current.isDragging ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-default'}`}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -580,7 +621,7 @@ export default function ConstellationMapImproved({
         >
           <p className="text-sm font-medium">
             <span className="text-purple-600 font-bold">{filteredArtesanas.length}</span>
-            <span className="text-gray-600"> artesanas</span>
+            <span className="text-gray-600"> creadoras</span>
           </p>
         </motion.div>
 
